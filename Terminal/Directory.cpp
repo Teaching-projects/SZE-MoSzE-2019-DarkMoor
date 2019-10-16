@@ -56,11 +56,11 @@ void Directory::ListDirectories()
 		Directory* dir = dynamic_cast<Directory*>(item);
 		if (dir != nullptr)
 		{
-			std::cout << dir->GetName() << "\t" << "dir\n";
+			std::cout << dir->GetName() << "\t" << "dir \n";
 		}
 		else
 		{
-			std::cout << item->GetName() << "\t" << "file\n";
+			std::cout << item->GetName() << "\t" << "file \n";
 		}
 	}
 }
