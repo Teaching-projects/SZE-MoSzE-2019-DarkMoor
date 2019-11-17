@@ -19,8 +19,6 @@ jobs:
           at: .
       - run: './bin.out < .circleci/test.txt > .circleci/output.txt'
       - run: 'diff .circleci/output.txt .circleci/expectedresult.txt > diff.out'
-      - run: 'cat diff.out'
-      - run: 'rm .circleci/output.txt'
 workflows:
   version: 2.1
   build_and_test:
