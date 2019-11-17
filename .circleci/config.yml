@@ -16,7 +16,7 @@ jobs:
       - run: 'rm ./.circleci/output.txt'
 workflows:
   version: 2.1
-  build_and_test:
+  build:
     jobs:
       - build:
           filters:
@@ -24,6 +24,8 @@ workflows:
               only:
                 - master
                 - dev
+  test:
+    jobs:
       - test:
           filters:
             branches:
