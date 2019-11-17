@@ -5,15 +5,15 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: 'make && make clean'
+      - run: 'make -std=c++11 && make clean'
   test:
     machine:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: './bin < /.circleci/test.txt > /.circleci/output.txt'
-      - run: 'diff /.circleci/output.txt /.circleci/expectedresult.txt'
-      - run: 'rm /.circleci/output.txt'
+      - run: './bin < ./.circleci/test.txt > ./.circleci/output.txt'
+      - run: 'diff ./.circleci/output.txt ./.circleci/expectedresult.txt'
+      - run: 'rm ./.circleci/output.txt'
 workflows:
   version: 2.1
   build_and_test:

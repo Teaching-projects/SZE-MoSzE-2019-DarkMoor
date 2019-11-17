@@ -15,11 +15,11 @@ public:
 	}
 	~Directory()
 	{
-		delete Parent;
 		for (auto dir : SubDirectories)
 		{
 			delete dir;
 		}
+		delete Parent;
 	}
 	std::string GetName() override;
 	std::string GetFullName() override;
