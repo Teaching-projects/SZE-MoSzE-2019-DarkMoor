@@ -2,13 +2,14 @@
 #define EXIT_H
 #include "CommandBase.h"
 #include <string>
+#include <vector>
 
 class Exit : public CommandBase
 {
 private:
-	virtual bool ValidateParams(std::string params) override;
+	bool ValidateParams(std::vector<std::string> args) override;
 public:
-	Exit(std::string Name) : CommandBase(Name) {}
+	Exit(std::string Name, std::string Options, int NonOptionalParams);
 	void Execute(std::string params) override;
 };
 #endif

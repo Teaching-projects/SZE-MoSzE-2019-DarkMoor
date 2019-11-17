@@ -11,5 +11,6 @@ public:
 	Base(std::string Name, Directory* Parent);
 	virtual std::string GetName() = 0;
 	virtual std::string GetFullName() = 0;
+	virtual Directory* GetParent() = 0;
 };
 #endif

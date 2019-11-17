@@ -1,7 +1,15 @@
 #include "LS.h"
 #include "Terminal.h"
+#include "Base.h"
 #include "Directory.h"
 #include <sstream>
+#include <vector>
+#include <iostream>
+
+LS::LS(std::string Name, std::string Options, int NonOptionalParams) : CommandBase(Name, Options, NonOptionalParams)
+{
+
+}
 
 void LS::Execute(std::string params)
 {
@@ -10,17 +18,33 @@ void LS::Execute(std::string params)
 		Terminal::GetInstance()->GetActual()->ListDirectories();
 		return;
 	}
-	Directory* dir = GetDirectory(params);
-	if (dir != nullptr)
+	Base* b = GetDirectory(params);
+	if (b != nullptr)
 	{
-		dir->ListDirectories();
+		Directory* dir = dynamic_cast<Directory*>(b);
+		if (dir != nullptr)
+		{
+			dir->ListDirectories();
+		}
+		else
+		{
+			std::cout << "Not a directory!" << std::endl;
+		}
+	}
+	else
+	{
+		std::cout << "No such file or directory!" << std::endl;
 	}
 }
-Directory* LS::GetDirectory(std::string path)
+Base* LS::GetDirectory(std::string path)
 {
-	return Terminal::GetInstance()->GetActual()->GetDirectory(path);
+	return Terminal::GetInstance()->GetActual();
 }
-bool LS::ValidateParams(std::string params)
+Base* LS::GetDirectoryRecursive(std::string path, Base* startDir)
+{
+	return nullptr;
+}
+bool LS::ValidateParams(std::vector<std::string> args)
 {
 	return false;
 }

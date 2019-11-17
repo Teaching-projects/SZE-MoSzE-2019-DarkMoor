@@ -47,17 +47,13 @@ Directory* Directory::AddDirectory(std::string dirname)
 	return dir;
 }
 
-Directory* Directory::GetDirectory(std::string dirname)
+Base* Directory::GetDirectory(std::string dirname)
 {
 	for (auto dir : SubDirectories)
 	{
-		Directory* castedDir = dynamic_cast<Directory*>(dir);
-		if (castedDir != nullptr)
+		if (dir->GetName() == dirname)
 		{
-			if (dir->GetName() == dirname)
-			{
-				return castedDir;
-			}
+			return dir;
 		}
 	}
 	return nullptr;
@@ -75,6 +71,19 @@ void Directory::ListDirectories()
 		else
 		{
 			std::cout << item->GetName() << "\t" << "file" << std::endl;
+		}
+	}
+}
+
+void Directory::RemoveDirectory(std::string path)
+{
+	int i = 0;
+	for (auto dir : SubDirectories)
+	{
+		if (dir->GetName() == path)
+		{
+			delete dir;
+			SubDirectories.erase(SubDirectories.begin() + i);
 		}
 	}
 }

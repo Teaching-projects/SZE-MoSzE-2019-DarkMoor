@@ -1,16 +1,22 @@
 #ifndef COMMANDBASE_H
 #define COMMANDBASE_H
 #include <string>
+#include <vector>
 
 class CommandBase
 {
 private:
 	std::string name;
 protected:
-	virtual bool ValidateParams(std::string params) = 0;
+	int nonOptionalParams;
+	std::string options;
+
+	virtual bool ValidateParams(std::vector<std::string> args) = 0;
 public:
-	CommandBase(std::string Name)
+	CommandBase(std::string Name, std::string Options, int NonOptionalParams)
 	{
+		this->options = Options;
+		this->nonOptionalParams = NonOptionalParams;
 		this->name = Name;
 	}
 	std::string GetName() 
