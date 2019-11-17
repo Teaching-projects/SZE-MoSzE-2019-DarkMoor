@@ -1,5 +1,5 @@
 #include "LS.h"
-#include "terminal.h"
+#include "Terminal.h"
 #include "Directory.h"
 #include <sstream>
 
