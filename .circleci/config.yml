@@ -9,7 +9,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - a.out
+            - bin.out
   test:
     machine:
       image: ubuntu-1604:201903-01
