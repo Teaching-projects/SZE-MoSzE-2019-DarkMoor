@@ -47,7 +47,7 @@ Terminal* Terminal::GetInstance()
 
 void Terminal::PrintActualDir()
 {
-	std::cout << this->actual->GetFullName() << ">";
+	std::cout << this->actual->GetFullName() + ">";
 }
 
 void Terminal::MainLoop()
@@ -57,10 +57,11 @@ void Terminal::MainLoop()
 	while (!exit)
 	{
 		std::getline(std::cin, input);
-		std::cout << std::endl;
+		input = Trim(input);
 		std::stringstream ss(input);
 		std::string element;
-		if (std::getline(ss, element, ' '))
+		std::cout << std::endl;
+		if (std::getline(ss, element, ' ') )
 		{
 			for (auto c : commands)
 			{
@@ -69,6 +70,7 @@ void Terminal::MainLoop()
 					element = "";
 					std::getline(ss, element, ' ');
 					c.second->Execute(element);
+					break;
 				}
 			}
 		}
@@ -107,4 +109,12 @@ bool Terminal::GetExit()
 void Terminal::SetExit(bool exit)
 {
 	this->exit = exit;
+}
+
+std::string Terminal::Trim(std::string str)
+{
+	std::string chars = "\t\n\v\f\r ";
+	str.erase(0, str.find_first_not_of(chars));
+	str.erase(str.find_last_not_of(chars) + 1);
+	return str;
 }

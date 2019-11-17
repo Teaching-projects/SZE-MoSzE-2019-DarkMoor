@@ -15,6 +15,8 @@ private:
 	Directory* actual;
 	bool exit;
 	Terminal();
+
+	std::string Trim(std::string str);
 public:
 	~Terminal();
 
