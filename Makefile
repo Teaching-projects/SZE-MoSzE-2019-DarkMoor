@@ -1,5 +1,5 @@
 all: Terminal/Base.o Terminal/CD.o Terminal/Terminal.o Terminal/Directory.o Terminal/LS.o Terminal/main.o Terminal/MKDir.o
-	g++ -o bin Terminal/Base.o Terminal/CD.o Terminal/Terminal.o Terminal/Directory.o Terminal/LS.o Terminal/main.o Terminal/MKDir.o -std=c++11
+	g++ -std=c++11 -std=gnu++11 -o bin Terminal/Base.o Terminal/CD.o Terminal/Terminal.o Terminal/Directory.o Terminal/LS.o Terminal/main.o Terminal/MKDir.o
 	
 Base.o: Base.cpp
 	g++ -c Terminal/Base.cpp -std=c++11
