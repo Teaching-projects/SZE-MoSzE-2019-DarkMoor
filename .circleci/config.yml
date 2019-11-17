@@ -1,10 +1,11 @@
-version: 2.1
+version: 2.0
 jobs:
   build:
-    branches:
-      only:
-        - master
-        - dev
+    filters:
+      branches:
+        only:
+          - master
+          - dev
     machine:
       image: ubuntu-1604:201903-01
     steps:
