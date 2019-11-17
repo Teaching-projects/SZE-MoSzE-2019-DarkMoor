@@ -2,6 +2,7 @@
 #define CD_H
 #include "CommandBase.h"
 #include <string>
+#include <vector>
 
 class Directory;
 class CD : public CommandBase
@@ -9,9 +10,9 @@ class CD : public CommandBase
 private:
 	Directory* GetTargetDirectory(std::string path);
 	Directory* GetTargetDirectoryRecursive(std::string path, Directory* startDir);
-	virtual bool ValidateParams(std::string params) override;
+	bool ValidateParams(std::vector<std::string> args) override;
 public:
-	CD(std::string Name) : CommandBase(Name) {}
+	CD(std::string Name, std::string Options, int NonOptionalParams);
 	void Execute(std::string params) override;
 };
 #endif // !CD_H

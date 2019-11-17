@@ -2,16 +2,17 @@
 #define LS_H
 #include "CommandBase.h"
 #include <string>
+#include <vector>
 
-class Directory;
+class Base;
 class LS : public CommandBase
 {
 private:
-	Directory* GetDirectory(std::string path);
-	Directory* GetDirectoryRecursive(std::string path, Directory* startDir);
-	virtual bool ValidateParams(std::string params) override;
+	Base* GetDirectory(std::string path);
+	Base* GetDirectoryRecursive(std::string path, Base* startDir);
+	bool ValidateParams(std::vector<std::string> args) override;
 public:
-	LS(std::string Name) : CommandBase(Name) {}
+	LS(std::string Name, std::string Options, int NonOptionalParams);
 	void Execute(std::string params) override;
 };
 #endif

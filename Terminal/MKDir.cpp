@@ -3,6 +3,12 @@
 #include "Directory.h"
 #include <sstream>
 #include <iostream>
+#include <vector>
+
+MKDir::MKDir(std::string Name, std::string Options, int NonOptionalParams) : CommandBase(Name, Options, NonOptionalParams)
+{
+
+}
 
 void MKDir::Execute(std::string params)
 {
@@ -19,7 +25,11 @@ Directory* MKDir::AddDirectory(std::string path)
 	}
 	return nullptr;
 }
-bool MKDir::ValidateParams(std::string params)
+Directory* MKDir::AddDirectoryRecursive(std::string path, Directory* startDir)
+{
+	return nullptr;
+}
+bool MKDir::ValidateParams(std::vector<std::string> args)
 {
 	return false;
 }

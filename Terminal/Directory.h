@@ -14,9 +14,10 @@ public:
 	~Directory();
 	std::string GetName() override;
 	std::string GetFullName() override;
-	Directory* GetParent();
+	Directory* GetParent() override;
 	Directory* AddDirectory(std::string path);
 	void ListDirectories();
-	Directory* GetDirectory(std::string path);
+	void RemoveDirectory(std::string path);
+	Base* GetDirectory(std::string path);
 };
 #endif

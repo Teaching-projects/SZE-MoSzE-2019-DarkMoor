@@ -1,8 +1,15 @@
 #include "CD.h"
 #include "Terminal.h"
 #include "Directory.h"
+#include "Base.h"
 #include <sstream>
 #include <iostream>
+#include <vector>
+
+CD::CD(std::string Name, std::string Options, int NonOptionalParams) : CommandBase(Name, Options, NonOptionalParams)
+{
+
+}
 
 void CD::Execute(std::string params)
 {
@@ -13,21 +20,31 @@ void CD::Execute(std::string params)
 }
 Directory* CD::GetTargetDirectory(std::string path)
 {
-	Directory* dir = nullptr;
+	Base* b = nullptr;
 	if (path == "..")
 	{
-		dir = Terminal::GetInstance()->GetActual()->GetParent();
+		b = Terminal::GetInstance()->GetActual()->GetParent();
 	}
 	else 
 	{
-		dir = Terminal::GetInstance()->GetActual()->GetDirectory(path);
-		if (dir == nullptr) {
-			std::cout << "Directory doesn't exists!\n";
-		}
+		b = Terminal::GetInstance()->GetActual()->GetDirectory(path);
+	}
+	if (b == nullptr)
+	{
+		std::cout << "Directory doesn't exists!\n";
+	}
+	Directory* dir = dynamic_cast<Directory*>(b);
+	if (dir == nullptr)
+	{
+		std::cout << "Not a directory!" << std::endl;
 	}
 	return dir;
 }
-bool CD::ValidateParams(std::string params)
+Directory* CD::GetTargetDirectoryRecursive(std::string path, Directory* startDir)
+{
+	return nullptr;
+}
+bool CD::ValidateParams(std::vector<std::string> args)
 {
 	return false;
 }

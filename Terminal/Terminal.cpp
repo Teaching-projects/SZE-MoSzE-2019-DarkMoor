@@ -9,6 +9,7 @@
 #include "LS.h"
 #include "MKDir.h"
 #include "Exit.h"
+#include "RM.h"
 
 
 Terminal* Terminal::terminal = nullptr;
@@ -37,10 +38,11 @@ Terminal* Terminal::GetInstance()
 	if (Terminal::terminal == nullptr)
 	{
 		Terminal::terminal = new Terminal();
-		Terminal::terminal->AddCommand(new LS("ls"));
-		Terminal::terminal->AddCommand(new MKDir("mkdir"));
-		Terminal::terminal->AddCommand(new CD("cd"));
-		Terminal::terminal->AddCommand(new Exit("exit"));
+		Terminal::terminal->AddCommand(new LS("ls", "", 0));
+		Terminal::terminal->AddCommand(new MKDir("mkdir", "", 1));
+		Terminal::terminal->AddCommand(new CD("cd", "", 1));
+		Terminal::terminal->AddCommand(new Exit("exit", "", 0));
+		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
 	}
 	return Terminal::terminal;
 }
@@ -69,7 +71,7 @@ void Terminal::MainLoop()
 				{
 					element = "";
 					std::getline(ss, element, ' ');
-					c.second->Execute(element);
+					c.second->Execute(Trim(input.substr(c.first.length())));
 					break;
 				}
 			}

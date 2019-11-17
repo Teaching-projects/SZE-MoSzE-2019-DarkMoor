@@ -16,7 +16,6 @@ private:
 	bool exit;
 	Terminal();
 
-	std::string Trim(std::string str);
 public:
 	~Terminal();
 
@@ -30,5 +29,6 @@ public:
 	void AddCommand(CommandBase* commmand);
 	bool GetExit();
 	void SetExit(bool exit);
+	std::string Trim(std::string str);
 };
 #endif

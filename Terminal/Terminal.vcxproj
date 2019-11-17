@@ -158,6 +158,7 @@
     <ClCompile Include="LS.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MKDir.cpp" />
+    <ClCompile Include="RM.cpp" />
     <ClCompile Include="Terminal.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +169,7 @@
     <ClInclude Include="Exit.h" />
     <ClInclude Include="LS.h" />
     <ClInclude Include="MKDir.h" />
+    <ClInclude Include="RM.h" />
     <ClInclude Include="Terminal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
