@@ -6,12 +6,17 @@ jobs:
     steps:
       - checkout
       - run: 'make && make clean'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - a.out
   test:
     machine:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: 'ls'
+      - attach_workspace:
+          at: .
       - run: './bin.out < .circleci/test.txt > .circleci/output.txt'
       - run: 'diff .circleci/output.txt .circleci/expectedresult.txt'
       - run: 'rm .circleci/output.txt'
