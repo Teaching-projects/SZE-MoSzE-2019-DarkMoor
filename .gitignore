@@ -340,4 +340,4 @@ ASALocalRun/
 healthchecksdb
 
 Terminal/*.o
-/bin
+bin.out

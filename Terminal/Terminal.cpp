@@ -8,23 +8,28 @@
 #include "CD.h"
 #include "LS.h"
 #include "MKDir.h"
+#include "Exit.h"
 
 
 Terminal* Terminal::terminal = nullptr;
-Directory* Terminal::root;
-Directory* Terminal::actual;
+Directory* root;
+Directory* actual;
+
+Terminal::Terminal()
+{
+	this->root = new Directory("/", nullptr);
+	this->actual = Terminal::root;
+	this->exit = false;
+}
 
 Terminal::~Terminal()
 {
+	delete root;
 	for (auto c : commands)
 	{
-		delete& c.second;
+		delete c.second;
 	}
 	commands.clear();
-	delete& commands;
-	delete root;
-	delete actual;
-	delete terminal;
 }
 
 Terminal* Terminal::GetInstance()
@@ -32,27 +37,27 @@ Terminal* Terminal::GetInstance()
 	if (Terminal::terminal == nullptr)
 	{
 		Terminal::terminal = new Terminal();
-		Terminal::root = new Directory("/", nullptr);
-		Terminal::actual = Terminal::root;
 		Terminal::terminal->AddCommand(new LS("ls"));
 		Terminal::terminal->AddCommand(new MKDir("mkdir"));
 		Terminal::terminal->AddCommand(new CD("cd"));
+		Terminal::terminal->AddCommand(new Exit("exit"));
 	}
 	return Terminal::terminal;
 }
 
 void Terminal::PrintActualDir()
 {
-	std::cout << this->actual->GetFullName() + ">";
+	std::cout << this->actual->GetFullName() << ">";
 }
 
 void Terminal::MainLoop()
 {
 	std::string input;
 	this->PrintActualDir();
-	while (true)
+	while (!exit)
 	{
 		std::getline(std::cin, input);
+		std::cout << std::endl;
 		std::stringstream ss(input);
 		std::string element;
 		if (std::getline(ss, element, ' '))
@@ -67,7 +72,10 @@ void Terminal::MainLoop()
 				}
 			}
 		}
-		this->PrintActualDir();
+		if (!exit)
+		{
+			this->PrintActualDir();
+		}
 	}
 }
 
@@ -89,4 +97,14 @@ Directory* Terminal::GetActual()
 void Terminal::SetActual(Directory* dir)
 {
 	Terminal::actual = dir;
+}
+
+bool Terminal::GetExit()
+{
+	return this->exit;
+}
+
+void Terminal::SetExit(bool exit)
+{
+	this->exit = exit;
 }

@@ -9,5 +9,5 @@ int main()
 {
 	terminal = Terminal::GetInstance();
 	terminal->MainLoop();
-	delete& terminal;
+	delete terminal;
 }

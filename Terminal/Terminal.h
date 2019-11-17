@@ -11,9 +11,10 @@ private:
 	static Terminal* terminal;
 
 	std::map<std::string, CommandBase*> commands;
-	static Directory* root;
-	static Directory* actual;
-	Terminal() {}
+	Directory* root;
+	Directory* actual;
+	bool exit;
+	Terminal();
 public:
 	~Terminal();
 
@@ -25,5 +26,7 @@ public:
 	void MainLoop();
 	void PrintActualDir();
 	void AddCommand(CommandBase* commmand);
+	bool GetExit();
+	void SetExit(bool exit);
 };
 #endif

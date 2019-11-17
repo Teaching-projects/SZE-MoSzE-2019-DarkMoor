@@ -1,5 +1,6 @@
 mkdir asd
 cd asd
 ls
-cd ..
+cd .. 
 ls
+exit

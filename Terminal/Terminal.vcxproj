@@ -154,6 +154,7 @@
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="CD.cpp" />
     <ClCompile Include="Directory.cpp" />
+    <ClCompile Include="Exit.cpp" />
     <ClCompile Include="LS.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MKDir.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="CD.h" />
     <ClInclude Include="CommandBase.h" />
     <ClInclude Include="Directory.h" />
+    <ClInclude Include="Exit.h" />
     <ClInclude Include="LS.h" />
     <ClInclude Include="MKDir.h" />
     <ClInclude Include="Terminal.h" />
