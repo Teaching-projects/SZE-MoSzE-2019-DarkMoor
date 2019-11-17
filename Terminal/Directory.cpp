@@ -2,6 +2,20 @@
 #include <string>
 #include <iostream>
 
+Directory::Directory(std::string Name, Directory* Parent) : Base(Name, Parent)
+{
+
+}
+
+Directory::~Directory()
+{
+	for (auto dir : SubDirectories)
+	{
+		delete dir;
+	}
+	delete Parent;
+}
+
 std::string Directory::GetFullName()
 {
 	if (this->Parent != nullptr)

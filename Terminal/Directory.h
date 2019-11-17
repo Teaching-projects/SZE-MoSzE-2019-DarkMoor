@@ -10,17 +10,8 @@ class Directory : public Base
 private:
 	std::vector<Base*> SubDirectories;
 public:
-	Directory(std::string Name, Directory* Parent) :Base(Name, Parent)
-	{
-	}
-	~Directory()
-	{
-		for (auto dir : SubDirectories)
-		{
-			delete dir;
-		}
-		delete Parent;
-	}
+	Directory(std::string Name, Directory* Parent);
+	~Directory();
 	std::string GetName() override;
 	std::string GetFullName() override;
 	Directory* GetParent();
