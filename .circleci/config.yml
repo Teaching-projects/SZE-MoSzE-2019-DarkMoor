@@ -1,11 +1,6 @@
-version: 2
+version: 2.1
 jobs:
   build:
-    filters:
-      branches:
-        only:
-          - master
-          - dev
     machine:
       image: ubuntu-1604:201903-01
     steps:
@@ -23,5 +18,15 @@ workflows:
   version: 2.1
   build_and_test:
     jobs:
-      - build
-      - test
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+                - dev
+      - test:
+          filters:
+            branches:
+              only:
+                - master
+                - dev
