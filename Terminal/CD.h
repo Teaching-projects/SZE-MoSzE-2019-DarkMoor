@@ -10,7 +10,10 @@ class CD : public CommandBase
 private:
 	Directory* GetTargetDirectory(std::string path);
 	Directory* GetTargetDirectoryRecursive(std::string path, Directory* startDir);
-	bool ValidateParams(std::vector<std::string> args) override;
+	
+	//bool ValidateParams(std::vector<std::string> args) override;
+	void ResetOptions() override;
+	bool SetOptions(char c) override;
 public:
 	CD(std::string Name, std::string Options, int NonOptionalParams);
 	void Execute(std::string params) override;

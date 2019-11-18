@@ -6,13 +6,14 @@ Exit::Exit(std::string Name, std::string Options, int NonOptionalParams) : Comma
 {
 
 }
-
 void Exit::Execute(std::string params)
 {
 	Terminal::GetInstance()->SetExit(true);
 }
-
-bool Exit::ValidateParams(std::vector<std::string> args)
+void Exit::ResetOptions()
+{
+}
+bool Exit::SetOptions(char c)
 {
 	return true;
 }

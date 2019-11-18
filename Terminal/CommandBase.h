@@ -11,18 +11,16 @@ protected:
 	int nonOptionalParams;
 	std::string options;
 
-	virtual bool ValidateParams(std::vector<std::string> args) = 0;
+	std::string Trim(std::string str);
+	std::vector<std::string> GetArgs(std::string params);
+	bool ValidateParams(std::vector<std::string> args);
+
+	virtual void ResetOptions() = 0;
+	virtual bool SetOptions(char c) = 0;
 public:
-	CommandBase(std::string Name, std::string Options, int NonOptionalParams)
-	{
-		this->options = Options;
-		this->nonOptionalParams = NonOptionalParams;
-		this->name = Name;
-	}
-	std::string GetName() 
-	{
-		return this->name;
-	}
+	CommandBase(std::string Name, std::string Options, int NonOptionalParams);
+	std::string GetName();
+
 	virtual void Execute(std::string params) = 0;
 };
 #endif // !COMMANDBASE_H

@@ -9,7 +9,9 @@ class MKDir : public CommandBase
 {
 	Directory* AddDirectory(std::string path);
 	Directory* AddDirectoryRecursive(std::string path, Directory* startDir);
-	bool ValidateParams(std::vector<std::string> args) override;
+
+	void ResetOptions() override;
+	bool SetOptions(char c) override;
 public:
 	MKDir(std::string Name, std::string Options, int NonOptionalParams);
 	void Execute(std::string params) override;

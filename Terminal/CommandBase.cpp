@@ -1,0 +1,65 @@
+#include "CommandBase.h"
+#include <iostream>
+#include <sstream>
+#include <string>
+
+CommandBase::CommandBase(std::string Name, std::string Options, int NonOptionalParams)
+{
+	this->options = Options;
+	this->nonOptionalParams = NonOptionalParams;
+	this->name = Name;
+}
+
+std::string CommandBase::GetName()
+{
+	return this->name;
+}
+
+std::string CommandBase::Trim(std::string str)
+{
+	std::string chars = "\t\n\v\f\r ";
+	str.erase(0, str.find_first_not_of(chars));
+	str.erase(str.find_last_not_of(chars) + 1);
+	return str;
+}
+
+std::vector<std::string> CommandBase::GetArgs(std::string params)
+{
+	std::vector<std::string> argv;
+	std::stringstream ss(params);
+	std::string arg;
+	while (std::getline(ss, arg, ' '))
+	{
+		if (arg.length() != 0)
+		{
+			argv.push_back(arg);
+		}
+	}
+	return argv;
+}
+
+bool CommandBase::ValidateParams(std::vector<std::string> args)
+{
+	int nonOptionParams = 0;
+	for (auto a : args)
+	{
+		if (a[0] != '-')
+		{
+			nonOptionParams++;
+			continue;
+		}
+		for (int i = 1; i < (int)a.length(); i++)
+		{
+			if (!SetOptions(a[i]))
+			{
+				std::cout << "Invalid option: " + a[i] << std::endl;
+				return false;
+			}
+		}
+	}
+	if (nonOptionParams >= nonOptionalParams)
+	{
+		return true;
+	}
+	return false;
+}

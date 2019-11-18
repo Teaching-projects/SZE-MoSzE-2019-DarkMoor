@@ -29,7 +29,10 @@ Directory* MKDir::AddDirectoryRecursive(std::string path, Directory* startDir)
 {
 	return nullptr;
 }
-bool MKDir::ValidateParams(std::vector<std::string> args)
+void MKDir::ResetOptions()
 {
-	return false;
+}
+bool MKDir::SetOptions(char c)
+{
+	return true;
 }

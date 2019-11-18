@@ -16,6 +16,8 @@ private:
 	bool exit;
 	Terminal();
 
+	std::string Trim(std::string str);
+	void PrintActualDir();
 public:
 	~Terminal();
 
@@ -25,10 +27,8 @@ public:
 	Directory* GetActual();
 	void SetActual(Directory* dir);
 	void MainLoop();
-	void PrintActualDir();
 	void AddCommand(CommandBase* commmand);
 	bool GetExit();
 	void SetExit(bool exit);
-	std::string Trim(std::string str);
 };
 #endif

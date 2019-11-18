@@ -10,7 +10,9 @@ class LS : public CommandBase
 private:
 	Base* GetDirectory(std::string path);
 	Base* GetDirectoryRecursive(std::string path, Base* startDir);
-	bool ValidateParams(std::vector<std::string> args) override;
+
+	void ResetOptions() override;
+	bool SetOptions(char c) override;
 public:
 	LS(std::string Name, std::string Options, int NonOptionalParams);
 	void Execute(std::string params) override;

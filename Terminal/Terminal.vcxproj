@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="CD.cpp" />
+    <ClCompile Include="CommandBase.cpp" />
     <ClCompile Include="Directory.cpp" />
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="LS.cpp" />

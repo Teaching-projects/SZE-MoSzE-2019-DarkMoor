@@ -44,7 +44,10 @@ Directory* CD::GetTargetDirectoryRecursive(std::string path, Directory* startDir
 {
 	return nullptr;
 }
-bool CD::ValidateParams(std::vector<std::string> args)
+void CD::ResetOptions()
 {
-	return false;
+}
+bool CD::SetOptions(char c)
+{
+	return true;
 }

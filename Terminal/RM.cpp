@@ -21,7 +21,7 @@ RM::~RM()
 
 void RM::Execute(std::string params)
 {
-	std::vector<std::string> args = GetArgs(params);
+	std::vector<std::string> args = this->GetArgs(params);
 	if (!this->ValidateParams(args))
 	{
 		ResetOptions();
@@ -71,92 +71,33 @@ void RM::Execute(std::string params)
 			}
 		}
 	}
+	ResetOptions();
 }
-
 Base* RM::GetTarget(std::string path)
 {
 	return Terminal::GetInstance()->GetActual()->GetDirectory(path);
 }
-
 Base* RM::GetTargetRecursive(std::string path, Base* startDir)
 {
 	return nullptr;
 }
-
-bool RM::ValidateParams(std::vector<std::string> args)
-{
-	int nonOptionParams = 0;
-	for (auto a : args)
-	{
-		if (a[0] != '-')
-		{
-			nonOptionParams++;
-			continue;
-		}
-		for (int i = 1; i < (int)a.length(); i++)
-		{
-			bool validoption = false;
-			for (int j  = 0; j < options.length(); j++)
-			{
-				if (options[j] == a[i])
-				{
-					validoption = true;
-					SetOptions(a[i]);
-				}
-			}
-			if (!validoption)
-			{
-				std::cout << "Invalid option: " + a[i] << std::endl;
-				return false;
-			}
-		}
-	}
-	if (nonOptionParams >= nonOptionalParams)
-	{
-		return true;
-	}
-	return false;
-}
-
-std::vector<std::string> RM::GetArgs(std::string params)
-{
-	std::vector<std::string> argv;
-	std::stringstream ss(params);
-	std::string arg;
-	while (std::getline(ss, arg, ' '))
-	{
-		if (arg.length() != 0)
-		{
-			argv.push_back(arg);
-		}
-	}
-	return argv;
-}
-
-void RM::SetForce(char c)
-{
-	if (c == 'f')
-	{
-		this->force = true;
-	}
-}
-
-void RM::SetRecursive(char c)
-{
-	if (c == 'r')
-	{
-		this->recursive = true;
-	}
-}
-
-void RM::SetOptions(char c)
-{
-	SetForce(c);
-	SetRecursive(c);
-}
-
 void RM::ResetOptions()
 {
 	this->force = false;
 	this->recursive = false;
+}
+bool RM::SetOptions(char c)
+{
+	switch (c)
+	{
+	case 'f':
+		this->force = true;
+		return true;
+		break;
+	case 'r':
+		this->recursive = true;
+		return true;
+		break;
+	}
+	return false;
 }

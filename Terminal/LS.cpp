@@ -13,28 +13,55 @@ LS::LS(std::string Name, std::string Options, int NonOptionalParams) : CommandBa
 
 void LS::Execute(std::string params)
 {
-	if (params.length() < 1)
+	std::vector<std::string> args = this->GetArgs(params);
+	if (!this->ValidateParams(args))
 	{
-		Terminal::GetInstance()->GetActual()->ListDirectories();
+		ResetOptions();
 		return;
 	}
-	Base* b = GetDirectory(params);
-	if (b != nullptr)
+	for (auto it = args.begin(); it != args.end(); )
 	{
-		Directory* dir = dynamic_cast<Directory*>(b);
-		if (dir != nullptr)
+		if ((*it)[0] == '-')
 		{
-			dir->ListDirectories();
+			it = args.erase(it);
 		}
 		else
 		{
-			std::cout << "Not a directory!" << std::endl;
+			++it;
 		}
+	}
+	if (args.size() == 0)
+	{
+		Terminal::GetInstance()->GetActual()->ListDirectories();
 	}
 	else
 	{
-		std::cout << "No such file or directory!" << std::endl;
+		for (auto t : args)
+		{
+			if (args.size() > 1)
+			{
+				std::cout << t << ":" << std::endl;
+			}
+			Base* b = GetDirectory(t);
+			if (b != nullptr)
+			{
+				Directory* dir = dynamic_cast<Directory*>(b);
+				if (dir != nullptr)
+				{
+					dir->ListDirectories();
+				}
+				else
+				{
+					std::cout << "Not a directory!" << std::endl;
+				}
+			}
+			else
+			{
+				std::cout << "No such file or directory!" << std::endl;
+			}
+		}
 	}
+	ResetOptions();
 }
 Base* LS::GetDirectory(std::string path)
 {
@@ -44,7 +71,10 @@ Base* LS::GetDirectoryRecursive(std::string path, Base* startDir)
 {
 	return nullptr;
 }
-bool LS::ValidateParams(std::vector<std::string> args)
+void LS::ResetOptions()
 {
-	return false;
+}
+bool LS::SetOptions(char c)
+{
+	return true;
 }

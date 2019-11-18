@@ -7,7 +7,9 @@
 class Exit : public CommandBase
 {
 private:
-	bool ValidateParams(std::vector<std::string> args) override;
+	//bool ValidateParams(std::vector<std::string> args) override;
+	void ResetOptions() override;
+	bool SetOptions(char c) override;
 public:
 	Exit(std::string Name, std::string Options, int NonOptionalParams);
 	void Execute(std::string params) override;
