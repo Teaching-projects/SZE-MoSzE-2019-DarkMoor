@@ -19,17 +19,7 @@ void LS::Execute(std::string params)
 		ResetOptions();
 		return;
 	}
-	for (auto it = args.begin(); it != args.end(); )
-	{
-		if ((*it)[0] == '-')
-		{
-			it = args.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
+	args = RemoveOptions(args);
 	if (args.size() == 0)
 	{
 		Terminal::GetInstance()->GetActual()->ListDirectories();

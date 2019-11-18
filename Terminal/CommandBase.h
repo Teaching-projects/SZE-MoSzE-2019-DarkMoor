@@ -13,6 +13,7 @@ protected:
 
 	std::string Trim(std::string str);
 	std::vector<std::string> GetArgs(std::string params);
+	std::vector<std::string> RemoveOptions(std::vector<std::string> params);
 	bool ValidateParams(std::vector<std::string> args);
 
 	virtual void ResetOptions() = 0;

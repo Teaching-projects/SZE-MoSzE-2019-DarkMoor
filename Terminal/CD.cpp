@@ -13,9 +13,20 @@ CD::CD(std::string Name, std::string Options, int NonOptionalParams) : CommandBa
 
 void CD::Execute(std::string params)
 {
-	Directory* dir = GetTargetDirectory(params);
-	if (dir != nullptr) {
-		Terminal::GetInstance()->SetActual(dir);
+	std::vector<std::string> args = this->GetArgs(params);
+	if (!this->ValidateParams(args))
+	{
+		ResetOptions();
+		return;
+	}
+	args = RemoveOptions(args);
+	for (auto t : args)
+	{
+		Directory* dir = GetTargetDirectory(params);
+		if (dir != nullptr)
+		{
+			Terminal::GetInstance()->SetActual(dir);
+		}
 	}
 }
 Directory* CD::GetTargetDirectory(std::string path)
@@ -31,7 +42,7 @@ Directory* CD::GetTargetDirectory(std::string path)
 	}
 	if (b == nullptr)
 	{
-		std::cout << "Directory doesn't exists!\n";
+		std::cout << "Directory doesn't exists!" << std::endl;
 	}
 	Directory* dir = dynamic_cast<Directory*>(b);
 	if (dir == nullptr)

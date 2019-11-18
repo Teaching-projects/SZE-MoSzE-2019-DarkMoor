@@ -12,9 +12,19 @@ MKDir::MKDir(std::string Name, std::string Options, int NonOptionalParams) : Com
 
 void MKDir::Execute(std::string params)
 {
-	if (AddDirectory(params) == nullptr)
+	std::vector<std::string> args = this->GetArgs(params);
+	if (!this->ValidateParams(args))
 	{
-		std::cout << "Already exists!\n";
+		ResetOptions();
+		return;
+	}
+	args = RemoveOptions(args); 
+	for (auto t : args)
+	{
+		if (AddDirectory(t) == nullptr)
+		{
+			std::cout << "Cannot create directory '" + t + "': File exists" << std::endl;
+		}
 	}
 }
 Directory* MKDir::AddDirectory(std::string path)

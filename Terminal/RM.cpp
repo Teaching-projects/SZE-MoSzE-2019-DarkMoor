@@ -27,17 +27,7 @@ void RM::Execute(std::string params)
 		ResetOptions();
 		return;
 	}
-	for (auto it = args.begin(); it != args.end(); )
-	{
-		if ((*it)[0] == '-')
-		{
-			it = args.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
+	args = RemoveOptions(args);
 	for (auto t : args)
 	{
 		Base* target = GetTarget(t);

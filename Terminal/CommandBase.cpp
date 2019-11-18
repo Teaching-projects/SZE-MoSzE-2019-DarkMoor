@@ -38,6 +38,22 @@ std::vector<std::string> CommandBase::GetArgs(std::string params)
 	return argv;
 }
 
+std::vector<std::string> CommandBase::RemoveOptions(std::vector<std::string> args)
+{
+	for (auto it = args.begin(); it != args.end(); )
+	{
+		if ((*it)[0] == '-')
+		{
+			it = args.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+	return args;
+}
+
 bool CommandBase::ValidateParams(std::vector<std::string> args)
 {
 	int nonOptionParams = 0;
@@ -61,5 +77,6 @@ bool CommandBase::ValidateParams(std::vector<std::string> args)
 	{
 		return true;
 	}
+	std::cout << "Not enough parameter! Needed " << nonOptionalParams << ", got " << nonOptionParams << "." << std::endl;
 	return false;
 }
