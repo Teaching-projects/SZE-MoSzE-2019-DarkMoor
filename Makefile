@@ -1,7 +1,7 @@
 CXXFLAGS=-O2 -std=c++11 -std=c++0x
 
-Terminal: Terminal/Base.o Terminal/CommandBase.o Terminal/CD.o Terminal/Terminal.o Terminal/Directory.o Terminal/LS.o Terminal/main.o Terminal/MKDir.o Terminal/Exit.o Terminal/RM.o
-	g++ $(CXXFLAGS) -o bin.out Terminal/Base.o Terminal/CommandBase.o Terminal/CD.o Terminal/Terminal.o Terminal/Directory.o Terminal/LS.o Terminal/main.o Terminal/MKDir.o Terminal/Exit.o Terminal/RM.o
+Terminal: Terminal/Base.o Terminal/CommandBase.o Terminal/CD.o Terminal/Terminal.o Terminal/Directory.o Terminal/File.o Terminal/LS.o Terminal/main.o Terminal/MKDir.o Terminal/Exit.o Terminal/RM.o
+	g++ $(CXXFLAGS) -o bin.out Terminal/Base.o Terminal/CommandBase.o Terminal/CD.o Terminal/Terminal.o Terminal/Directory.o Terminal/File.o Terminal/LS.o Terminal/main.o Terminal/MKDir.o Terminal/Exit.o Terminal/RM.o
 	
 Base.o: Base.cpp
 	g++ -c Terminal/Base.cpp $(CXXFLAGS)
@@ -17,6 +17,9 @@ Terminal.o: Terminal.cpp
 	
 Directory.o: Directory.cpp
 	g++ -c Terminal/Directory.cpp $(CXXFLAGS)
+
+File.o: File.cpp
+	g++ -c Terminal/File.cpp $(CXXFLAGS)
 	
 LS.o: LS.cpp
 	g++ -c Terminal/LS.cpp $(CXXFLAGS)
