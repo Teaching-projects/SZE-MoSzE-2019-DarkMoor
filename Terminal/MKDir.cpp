@@ -29,7 +29,7 @@ void MKDir::Execute(std::string params)
 }
 Directory* MKDir::AddDirectory(std::string path)
 {
-	if (Terminal::GetInstance()->GetActual()->GetDirectory(path) == nullptr)
+	if (Terminal::GetInstance()->GetActual()->GetSubelement(path) == nullptr)
 	{
 		return Terminal::GetInstance()->GetActual()->AddDirectory(path);
 	}

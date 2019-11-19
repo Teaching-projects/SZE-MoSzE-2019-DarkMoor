@@ -38,7 +38,7 @@ Directory* CD::GetTargetDirectory(std::string path)
 	}
 	else 
 	{
-		b = Terminal::GetInstance()->GetActual()->GetDirectory(path);
+		b = Terminal::GetInstance()->GetActual()->GetSubelement(path);
 	}
 	if (b == nullptr)
 	{

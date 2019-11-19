@@ -65,7 +65,7 @@ void RM::Execute(std::string params)
 }
 Base* RM::GetTarget(std::string path)
 {
-	return Terminal::GetInstance()->GetActual()->GetDirectory(path);
+	return Terminal::GetInstance()->GetActual()->GetSubelement(path);
 }
 Base* RM::GetTargetRecursive(std::string path, Base* startDir)
 {

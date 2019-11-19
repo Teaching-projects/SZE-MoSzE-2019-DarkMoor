@@ -1,4 +1,5 @@
 #include "Directory.h"
+#include "File.h"
 #include <string>
 #include <iostream>
 
@@ -47,7 +48,7 @@ Directory* Directory::AddDirectory(std::string dirname)
 	return dir;
 }
 
-Base* Directory::GetDirectory(std::string dirname)
+Base* Directory::GetSubelement(std::string dirname)
 {
 	for (auto dir : SubDirectories)
 	{
@@ -57,6 +58,13 @@ Base* Directory::GetDirectory(std::string dirname)
 		}
 	}
 	return nullptr;
+}
+
+File* Directory::AddFile(std::string path)
+{
+	File* file = new File (path, this);
+	SubDirectories.push_back(file);
+	return file;
 }
 
 void Directory::ListDirectories()

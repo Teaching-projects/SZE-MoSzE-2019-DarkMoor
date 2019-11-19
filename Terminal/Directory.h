@@ -4,7 +4,7 @@
 #include "Base.h"
 #include "vector"
 
-
+class File;
 class Directory : public Base
 {
 private:
@@ -18,6 +18,7 @@ public:
 	Directory* AddDirectory(std::string path);
 	void ListDirectories();
 	void RemoveDirectory(std::string path);
-	Base* GetDirectory(std::string path);
+	Base* GetSubelement(std::string path);
+	File* AddFile(std::string path);
 };
 #endif
