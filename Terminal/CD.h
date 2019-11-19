@@ -11,7 +11,6 @@ private:
 	Directory* GetTargetDirectory(std::string path);
 	Directory* GetTargetDirectoryRecursive(std::string path, Directory* startDir);
 	
-	//bool ValidateParams(std::vector<std::string> args) override;
 	void ResetOptions() override;
 	bool SetOptions(char c) override;
 public:
