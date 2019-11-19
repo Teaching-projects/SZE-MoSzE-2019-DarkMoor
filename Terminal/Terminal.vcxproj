@@ -162,6 +162,7 @@
     <ClCompile Include="MKDir.cpp" />
     <ClCompile Include="RM.cpp" />
     <ClCompile Include="Terminal.cpp" />
+    <ClCompile Include="Touch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="MKDir.h" />
     <ClInclude Include="RM.h" />
     <ClInclude Include="Terminal.h" />
+    <ClInclude Include="Touch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

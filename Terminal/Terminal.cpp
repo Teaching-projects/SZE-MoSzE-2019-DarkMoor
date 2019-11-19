@@ -10,6 +10,7 @@
 #include "MKDir.h"
 #include "Exit.h"
 #include "RM.h"
+#include "Touch.h"
 
 
 Terminal* Terminal::terminal = nullptr;
@@ -43,6 +44,7 @@ Terminal* Terminal::GetInstance()
 		Terminal::terminal->AddCommand(new CD("cd", "", 1));
 		Terminal::terminal->AddCommand(new Exit("exit", "", 0));
 		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
+		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
 	}
 	return Terminal::terminal;
 }
