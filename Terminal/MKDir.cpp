@@ -29,10 +29,19 @@ void MKDir::Execute(std::string params)
 }
 Directory* MKDir::AddDirectory(std::string path)
 {
-	if (Terminal::GetInstance()->GetActual()->GetSubelement(path) == nullptr)
+	Base* b = nullptr;
+	Directory* dir = GetStartDirectory(path);
+	for (auto t : SplitPath(path))
 	{
-		return Terminal::GetInstance()->GetActual()->AddDirectory(path);
+		b = dir->GetSubelement(t);
+		if (b == nullptr)
+		{
+			return nullptr;
+		}
+		if (AddDirectory(t) == nullptr);
 	}
+
+	
 	return nullptr;
 }
 Directory* MKDir::AddDirectoryRecursive(std::string path, Directory* startDir)
