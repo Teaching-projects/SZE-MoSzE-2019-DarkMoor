@@ -1,4 +1,6 @@
 #include "CommandBase.h"
+#include "Directory.h"
+#include "Terminal.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -30,6 +32,7 @@ std::vector<std::string> CommandBase::GetArgs(std::string params)
 	std::string arg;
 	while (std::getline(ss, arg, ' '))
 	{
+		arg = Trim(arg);
 		if (arg.length() != 0)
 		{
 			argv.push_back(arg);
@@ -79,4 +82,21 @@ bool CommandBase::ValidateParams(std::vector<std::string> args)
 	}
 	std::cout << "Not enough parameter! Needed " << nonOptionalParams << ", got " << nonOptionParams << "." << std::endl;
 	return false;
+}
+
+Directory* CommandBase::GetStartDirectory(std::string path)
+{
+	if (path.length() > 1 && path[0] != '.' && path[0] != '/' || path.length() > 2 && path.substr(0, 2) == "./")
+	{
+		return Terminal::GetInstance()->GetActual();
+	}
+	if (path.length() > 1 && path[0] == '/')
+	{
+		return Terminal::GetInstance()->GetRoot();
+	}
+	if (path.length() > 3 && path.substr(0, 3) == "../")
+	{
+		return Terminal::GetInstance()->GetActual()->GetParent();
+	}
+	return nullptr;
 }
