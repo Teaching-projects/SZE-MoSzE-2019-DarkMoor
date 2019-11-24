@@ -16,7 +16,7 @@ protected:
 	std::vector<std::string> GetArgs(std::string params);
 	std::vector<std::string> RemoveOptions(std::vector<std::string> params);
 	bool ValidateParams(std::vector<std::string> args);
-	Directory* GetStartDirectory(std::string path);
+	Directory* GetStartDirectory(std::string &path);
 
 	virtual void ResetOptions() = 0;
 	virtual bool SetOptions(char c) = 0;

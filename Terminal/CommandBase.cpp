@@ -84,18 +84,25 @@ bool CommandBase::ValidateParams(std::vector<std::string> args)
 	return false;
 }
 
-Directory* CommandBase::GetStartDirectory(std::string path)
+Directory* CommandBase::GetStartDirectory(std::string &path)
 {
-	if (path.length() > 1 && path[0] != '.' && path[0] != '/' || path.length() > 2 && path.substr(0, 2) == "./")
+	if (path.length() > 1 && path[0] != '.' && path[0] != '/')
 	{
+		return Terminal::GetInstance()->GetActual();
+	}
+	if (path.length() > 2 && path.substr(0, 2) == "./")
+	{
+		path.erase(0, 2);
 		return Terminal::GetInstance()->GetActual();
 	}
 	if (path.length() > 1 && path[0] == '/')
 	{
+		path.erase(0, 1);
 		return Terminal::GetInstance()->GetRoot();
 	}
 	if (path.length() > 3 && path.substr(0, 3) == "../")
 	{
+		path.erase(0, 3);
 		return Terminal::GetInstance()->GetActual()->GetParent();
 	}
 	return nullptr;
