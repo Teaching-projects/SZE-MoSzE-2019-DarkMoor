@@ -107,3 +107,15 @@ Directory* CommandBase::GetStartDirectory(std::string &path)
 	}
 	return nullptr;
 }
+
+std::vector<std::string> CommandBase::SplitPath(std::string path)
+{
+	std::vector<std::string> names;
+	std::stringstream ss(path);
+	std::string name;
+	while (std::getline(ss, name, '/'))
+	{
+		names.push_back(name);
+	}
+	return names;
+}
