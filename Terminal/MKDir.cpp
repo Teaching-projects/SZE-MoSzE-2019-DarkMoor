@@ -43,8 +43,8 @@ void MKDir::AddDirectory(std::string path)
 			if (!dir->AddDirectory(t))
 			{
 				std::cout << "cannot create directory '" + originalpath + "': File exists" << std::endl;
-				return;
 			}
+			return;
 		}
 		b = dir->GetSubelement(t);
 		if (b == nullptr)

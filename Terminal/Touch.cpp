@@ -45,8 +45,8 @@ void Touch::AddFile(std::string path)
 			if (!dir->AddFile(t))
 			{
 				std::cout << "touch: cannot create file '" + originalpath + "': File exists" << std::endl;
-				return;
 			}
+			return;
 		}
 		b = dir->GetSubelement(t);
 		if (b == nullptr)
