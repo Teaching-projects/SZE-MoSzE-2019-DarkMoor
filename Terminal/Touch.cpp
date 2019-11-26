@@ -22,27 +22,47 @@ void Touch::Execute(std::string params)
 	args = RemoveOptions(args);
 	for (auto t : args)
 	{
-		if (AddFile(t) == nullptr)
-		{
-			std::cout << "Cannot create file '" + t + "': File exists" << std::endl;
-		}
+		AddFile(t);
 	}
 }
 
-File* Touch::AddFile(std::string path)
+void Touch::AddFile(std::string path)
 {
-	if (Terminal::GetInstance()->GetActual()->GetSubelement(path) == nullptr)
+	std::string originalpath = path;
+	Base* b = nullptr;
+	Directory* dir = GetStartDirectory(path);
+	if (dir == nullptr)
 	{
-		return Terminal::GetInstance()->GetActual()->AddFile(path);
+		std::cout << "touch: cannot create file '" + originalpath + "': No such file or directory" << std::endl;
+		return;
 	}
-	return nullptr;
+	std::vector<std::string> dirnames = SplitPath(path);
+	int i = 1;
+	for (auto t : dirnames)
+	{
+		if (i == dirnames.size())
+		{
+			if (!dir->AddFile(t))
+			{
+				std::cout << "touch: cannot create file '" + originalpath + "': File exists" << std::endl;
+				return;
+			}
+		}
+		b = dir->GetSubelement(t);
+		if (b == nullptr)
+		{
+			std::cout << "touch: cannot create file '" + originalpath + "': No such file or directory" << std::endl;
+			return;
+		}
+		dir = dynamic_cast<Directory*>(b);
+		if (dir == nullptr)
+		{
+			std::cout << "touch: cannot create file '" + originalpath + "': Not a directory" << std::endl;
+			return;
+		}
+		i++;
+	}
 }
-
-File* Touch::AddFileRecursive(std::string path, Base* startDir)
-{
-	return nullptr;
-}
-
 void Touch::ResetOptions()
 {
 }

@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-class Directory;
 class MKDir : public CommandBase
 {
 	void AddDirectory(std::string path);
