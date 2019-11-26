@@ -51,6 +51,9 @@
     <ClCompile Include="Touch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Echo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Terminal.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Touch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Echo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

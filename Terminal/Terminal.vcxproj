@@ -155,6 +155,7 @@
     <ClCompile Include="CD.cpp" />
     <ClCompile Include="CommandBase.cpp" />
     <ClCompile Include="Directory.cpp" />
+    <ClCompile Include="Echo.cpp" />
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="LS.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="CD.h" />
     <ClInclude Include="CommandBase.h" />
     <ClInclude Include="Directory.h" />
+    <ClInclude Include="Echo.h" />
     <ClInclude Include="Exit.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="LS.h" />
