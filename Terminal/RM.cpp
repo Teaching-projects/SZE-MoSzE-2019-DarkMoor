@@ -30,47 +30,71 @@ void RM::Execute(std::string params)
 	args = RemoveOptions(args);
 	for (auto t : args)
 	{
-		Base* target = GetTarget(t);
-		if (target != nullptr)
+		RemoveDirectory(t);
+	}
+	ResetOptions();
+}
+void RM::RemoveDirectory(std::string path)
+{
+	std::string originalpath = path;
+	Base* b = nullptr;
+	Directory* dir = GetStartDirectory(path);
+	if (dir == nullptr)
+	{
+		if (!force)
 		{
-			Directory* dir = dynamic_cast<Directory*>(target);
+			std::cout << "rm: cannot remove '" + originalpath + "': No such file or directory" << std::endl;
+		}
+		return;
+	}
+	std::vector<std::string> dirnames = SplitPath(path);
+	int i = 1;
+	for (auto t : dirnames)
+	{
+		b = dir->GetSubelement(t);
+		if (b == nullptr)
+		{
+			if (!force)
+			{
+				std::cout << "rm: cannot remove '" + originalpath + "': No such file or directory" << std::endl;
+			}
+			return;
+		}
+		dir = dynamic_cast<Directory*>(b);
+		if (i == dirnames.size())
+		{
 			if (dir != nullptr)
 			{
 				if (recursive)
 				{
-					dir->GetParent()->RemoveDirectory(dir->GetName());
+					dir->GetParent()->RemoveSubelement(dir->GetName());
 				}
 				else
 				{
 					if (!force)
 					{
-						std::cout << "rm: cannot remove '" + target->GetName() + "': Is a directory" << std::endl;
+						std::cout << "rm: cannot remove '" + dir->GetName() + "': Is a directory" << std::endl;
 					}
 				}
 			}
 			else
 			{
-				target->GetParent()->RemoveDirectory(target->GetName());
+				b->GetParent()->RemoveSubelement(b->GetName());
 			}
+			return;
 		}
-		else
+		if (dir == nullptr)
 		{
 			if (!force)
 			{
-				std::cout << "rm: cannot remove '" + t + "' : No such file or directory" << std::endl;
+				std::cout << "rm: cannot remove '" + originalpath + "': Not a directory" << std::endl;
 			}
+			return;
 		}
+		i++;
 	}
-	ResetOptions();
 }
-Base* RM::GetTarget(std::string path)
-{
-	return Terminal::GetInstance()->GetActual()->GetSubelement(path);
-}
-Base* RM::GetTargetRecursive(std::string path, Base* startDir)
-{
-	return nullptr;
-}
+
 void RM::ResetOptions()
 {
 	this->force = false;

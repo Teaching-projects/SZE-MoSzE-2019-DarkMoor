@@ -22,38 +22,43 @@ void CD::Execute(std::string params)
 	args = RemoveOptions(args);
 	for (auto t : args)
 	{
-		Directory* dir = GetTargetDirectory(params);
-		if (dir != nullptr)
-		{
-			Terminal::GetInstance()->SetActual(dir);
-		}
+		SetActuallDirectory(t);
+		return;
 	}
 }
-Directory* CD::GetTargetDirectory(std::string path)
+void CD::SetActuallDirectory(std::string path)
 {
+	std::string originalpath = path;
 	Base* b = nullptr;
-	if (path == "..")
-	{
-		b = Terminal::GetInstance()->GetActual()->GetParent();
-	}
-	else 
-	{
-		b = Terminal::GetInstance()->GetActual()->GetSubelement(path);
-	}
-	if (b == nullptr)
-	{
-		std::cout << "Directory doesn't exists!" << std::endl;
-	}
-	Directory* dir = dynamic_cast<Directory*>(b);
+	Directory* dir = GetStartDirectory(path);
 	if (dir == nullptr)
 	{
-		std::cout << "Not a directory!" << std::endl;
+		std::cout << "cd: '" + originalpath + "': No such file or directory" << std::endl;
+		return;
 	}
-	return dir;
-}
-Directory* CD::GetTargetDirectoryRecursive(std::string path, Directory* startDir)
-{
-	return nullptr;
+	std::vector<std::string> dirnames = SplitPath(path);
+	int i = 1;
+	for (auto t : dirnames)
+	{
+		b = dir->GetSubelement(t);
+		if (b == nullptr)
+		{
+			std::cout << "cd: '" + originalpath + "': No such file or directory" << std::endl;
+			return;
+		}
+		dir = dynamic_cast<Directory*>(b);
+		if (dir == nullptr)
+		{
+			std::cout << "cd: '" + originalpath + "': Not a directory" << std::endl;
+			return;
+		}
+		if (i == dirnames.size())
+		{
+			Terminal::GetInstance()->SetActual(dir);
+			return;
+		}
+		i++;
+	}
 }
 void CD::ResetOptions()
 {

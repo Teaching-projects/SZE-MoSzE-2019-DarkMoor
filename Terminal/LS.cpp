@@ -30,36 +30,51 @@ void LS::Execute(std::string params)
 		{
 			if (args.size() > 1)
 			{
-				std::cout << t << ":" << std::endl;
-			}
-			Base* b = GetDirectory(t);
-			if (b != nullptr)
-			{
-				Directory* dir = dynamic_cast<Directory*>(b);
-				if (dir != nullptr)
-				{
-					dir->ListDirectories();
-				}
-				else
-				{
-					std::cout << "Not a directory!" << std::endl;
-				}
+				std::cout << t  << ":" << std::endl;
+				GetDirectory(t);
+				std::cout << std::endl;
 			}
 			else
 			{
-				std::cout << "No such file or directory!" << std::endl;
+				GetDirectory(t);
 			}
 		}
 	}
 	ResetOptions();
 }
-Base* LS::GetDirectory(std::string path)
+void LS::GetDirectory(std::string path)
 {
-	return Terminal::GetInstance()->GetActual();
-}
-Base* LS::GetDirectoryRecursive(std::string path, Base* startDir)
-{
-	return nullptr;
+	std::string originalpath = path;
+	Base* b = nullptr;
+	Directory* dir = GetStartDirectory(path);
+	if (dir == nullptr)
+	{
+		std::cout << "ls: cannot access '" + originalpath + "': No such file or directory" << std::endl;
+		return;
+	}
+	std::vector<std::string> dirnames = SplitPath(path);
+	int i = 1;
+	for (auto t : dirnames)
+	{
+		b = dir->GetSubelement(t);
+		if (b == nullptr)
+		{
+			std::cout << "ls: cannot access '" + originalpath + "': No such file or directory" << std::endl;
+			return;
+		}
+		dir = dynamic_cast<Directory*>(b);
+		if (dir == nullptr)
+		{
+			std::cout << "ls: cannot access '" + originalpath + "': Not a directory" << std::endl;
+			return;
+		}
+		if (i == dirnames.size())
+		{
+			dir->ListDirectories();
+			return;
+		}
+		i++;
+	}
 }
 void LS::ResetOptions()
 {

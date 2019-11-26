@@ -99,7 +99,7 @@ void Directory::ListDirectories()
 	}
 }
 
-void Directory::RemoveDirectory(std::string path)
+bool Directory::RemoveSubelement(std::string path)
 {
 	int i = 0;
 	for (auto dir : SubDirectories)
@@ -108,6 +108,8 @@ void Directory::RemoveDirectory(std::string path)
 		{
 			delete dir;
 			SubDirectories.erase(SubDirectories.begin() + i);
+			return true;
 		}
 	}
+	return false;
 }

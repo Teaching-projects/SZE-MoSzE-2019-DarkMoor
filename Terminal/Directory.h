@@ -17,7 +17,7 @@ public:
 	Directory* GetParent() override;
 	Directory* AddDirectory(std::string path);
 	void ListDirectories();
-	void RemoveDirectory(std::string path);
+	bool RemoveSubelement(std::string path);
 	Base* GetSubelement(std::string path);
 	File* AddFile(std::string path);
 };

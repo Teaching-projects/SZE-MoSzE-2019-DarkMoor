@@ -4,12 +4,10 @@
 #include <string>
 #include <vector>
 
-class Directory;
 class CD : public CommandBase
 {
 private:
-	Directory* GetTargetDirectory(std::string path);
-	Directory* GetTargetDirectoryRecursive(std::string path, Directory* startDir);
+	void SetActuallDirectory(std::string path);
 	
 	void ResetOptions() override;
 	bool SetOptions(char c) override;

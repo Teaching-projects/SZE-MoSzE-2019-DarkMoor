@@ -4,12 +4,10 @@
 #include <string>
 #include <vector>
 
-class Base;
 class LS : public CommandBase
 {
 private:
-	Base* GetDirectory(std::string path);
-	Base* GetDirectoryRecursive(std::string path, Base* startDir);
+	void GetDirectory(std::string path);
 
 	void ResetOptions() override;
 	bool SetOptions(char c) override;
