@@ -22,6 +22,7 @@ Terminal::Terminal()
 	this->root = new Directory("/", nullptr);
 	this->actual = Terminal::root;
 	this->exit = false;
+	this->stdoRedirect = false;
 }
 
 Terminal::~Terminal()
@@ -78,6 +79,8 @@ void Terminal::MainLoop()
 				}
 			}
 		}
+		stdoRedirect = false;
+		stdoPath = "";
 		if (!exit)
 		{
 			this->PrintActualDir();
@@ -114,6 +117,24 @@ void Terminal::SetExit(bool exit)
 {
 	this->exit = exit;
 }
+
+bool Terminal::GetStdoRedirect()
+{
+	return this->stdoRedirect;
+}
+
+void Terminal::SetStdoRedirect(bool b)
+{
+	this->stdoRedirect = b;
+}
+
+void Terminal::SetStdoPath(std::string path)
+{
+	stdoPath = path;
+}
+
+void Terminal::StdOut(std::string)
+{}
 
 std::string Terminal::Trim(std::string str)
 {

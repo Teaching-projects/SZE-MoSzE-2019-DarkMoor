@@ -30,13 +30,41 @@ std::vector<std::string> CommandBase::GetArgs(std::string params)
 	std::vector<std::string> argv;
 	std::stringstream ss(params);
 	std::string arg;
+	std::string text = "";
+	int quote = 0;
 	while (std::getline(ss, arg, ' '))
 	{
 		arg = Trim(arg);
-		if (arg.length() != 0)
+		if (arg.length() != 0) continue;
+		if (arg[0] == '"') quote++;
+		if (arg[arg.length()-1] == '"') quote--;
+		if (quote == 0)
 		{
-			argv.push_back(arg);
+			if (arg == ">")
+			{
+				Terminal::GetInstance()->SetStdoRedirect(true);
+				continue;
+			}
+			if (!Terminal::GetInstance()->GetStdoRedirect())
+			{
+				if (text.length() > 0)
+				{
+					text += " " + arg;
+					text.erase(0,2);
+					text.erase(text.length() - 1);
+					argv.push_back(text);
+					text = "";
+				}
+				else argv.push_back(arg);
+			}
+			else
+			{
+				if (text.length() > 0) Terminal::GetInstance()->SetStdoPath(text + " " + arg);
+				else Terminal::GetInstance()->SetStdoPath(arg);
+				break;
+			}
 		}
+		else text += " " + arg;
 	}
 	return argv;
 }

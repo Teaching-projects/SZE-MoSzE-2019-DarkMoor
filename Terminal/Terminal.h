@@ -14,6 +14,9 @@ private:
 	Directory* root;
 	Directory* actual;
 	bool exit;
+	bool stdoRedirect;
+	std::string stdoPath;
+
 	Terminal();
 
 	std::string Trim(std::string str);
@@ -30,5 +33,9 @@ public:
 	void AddCommand(CommandBase* commmand);
 	bool GetExit();
 	void SetExit(bool exit);
+	bool GetStdoRedirect();
+	void SetStdoRedirect(bool b);
+	void SetStdoPath(std::string path);
+	void StdOut(std::string);
 };
 #endif
