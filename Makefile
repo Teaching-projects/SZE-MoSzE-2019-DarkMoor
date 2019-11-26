@@ -10,46 +10,46 @@ all: $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
 
 main.o: main.cpp,
-	$(CC) $(FLAGS) main.cpp, 
+	$(CC) $(FLAGS) Terminal/main.cpp, 
 
 Base.o: Base.cpp,
-	$(CC) $(FLAGS) Base.cpp, 
+	$(CC) $(FLAGS) Terminal/Base.cpp, 
 
 CD.o: CD.cpp,
-	$(CC) $(FLAGS) CD.cpp, 
+	$(CC) $(FLAGS) Terminal/CD.cpp, 
 
 CommandBase.o: CommandBase.cpp,
-	$(CC) $(FLAGS) CommandBase.cpp, 
+	$(CC) $(FLAGS) Terminal/CommandBase.cpp, 
 
 Directory.o: Directory.cpp,
-	$(CC) $(FLAGS) Directory.cpp, 
+	$(CC) $(FLAGS) Terminal/Directory.cpp, 
 
 Exit.o: Exit.cpp,
-	$(CC) $(FLAGS) Exit.cpp, 
+	$(CC) $(FLAGS) Terminal/Exit.cpp, 
 
 File.o: File.cpp,
-	$(CC) $(FLAGS) File.cpp, 
+	$(CC) $(FLAGS) Terminal/File.cpp, 
 
 FSJsonHandler.o: FSJsonHandler.cpp,
-	$(CC) $(FLAGS) FSJsonHandler.cpp, 
+	$(CC) $(FLAGS) Terminal/FSJsonHandler.cpp, 
 
 jsoncpp.o: jsoncpp.cpp,
-	$(CC) $(FLAGS) jsoncpp.cpp, 
+	$(CC) $(FLAGS) Terminal/jsoncpp.cpp, 
 
 LS.o: LS.cpp,
-	$(CC) $(FLAGS) LS.cpp, 
+	$(CC) $(FLAGS) Terminal/LS.cpp, 
 
 MKDir.o: MKDir.cpp,
-	$(CC) $(FLAGS) MKDir.cpp, 
+	$(CC) $(FLAGS) Terminal/MKDir.cpp, 
 
 RM.o: RM.cpp,
-	$(CC) $(FLAGS) RM.cpp, 
+	$(CC) $(FLAGS) Terminal/RM.cpp, 
 
 Terminal.o: Terminal.cpp,
-	$(CC) $(FLAGS) Terminal.cpp, 
+	$(CC) $(FLAGS) Terminal/Terminal.cpp, 
 
 Touch.o: Touch.cpp
-	$(CC) $(FLAGS) Touch.cpp 
+	$(CC) $(FLAGS) Terminal/Touch.cpp 
 
 
 clean:
