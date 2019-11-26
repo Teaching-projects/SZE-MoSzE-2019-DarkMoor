@@ -3,6 +3,7 @@
 #include <string>
 #include "Base.h"
 #include "vector"
+#include "json/json.h"
 
 class File;
 class Directory : public Base
@@ -20,5 +21,7 @@ public:
 	bool RemoveSubelement(std::string path);
 	Base* GetSubelement(std::string path);
 	File* AddFile(std::string path);
+	Json::Value Jsonify() override;
+	void UnJsonify(Json::Value SubValues) override;
 };
 #endif

@@ -1,43 +1,56 @@
-CXXFLAGS=-O2 -std=c++11 -std=c++0x
+OBJS	= Terminal/main.o Terminal/Base.o Terminal/CD.o Terminal/CommandBase.o Terminal/Directory.o Terminal/Exit.o Terminal/File.o Terminal/FSJsonHandler.o Terminal/jsoncpp.o Terminal/LS.o Terminal/MKDir.o Terminal/RM.o Terminal/Terminal.o Terminal/Touch.o
+SOURCE	= Terminal/main.cpp, Terminal/Base.cpp, Terminal/CD.cpp, Terminal/CommandBase.cpp, Terminal/Directory.cpp, Terminal/Exit.cpp, Terminal/File.cpp, Terminal/FSJsonHandler.cpp, Terminal/jsoncpp.cpp, Terminal/LS.cpp, Terminal/MKDir.cpp, Terminal/RM.cpp, Terminal/Terminal.cpp, Terminal/Touch.cpp
+HEADER	= Terminal/Base.h, Terminal/CD.h, Terminal/CommandBase.h, Terminal/Directory.h, Terminal/Exit.h, Terminal/File.h, Terminal/FSJsonHandler.h, Terminal/json\json-forwards.h, Terminal/json\json.h, Terminal/LS.h, Terminal/MKDir.h, Terminal/RM.h, Terminal/Terminal.h, Terminal/Touch.h,
+OUT	= myproject1
+CC	 = g++
+FLAGS	 = -g -c -Wall -O2 -std=c++11 -std=c++0x
+LFLAGS	 = 
 
-Terminal: Terminal/Base.o Terminal/CommandBase.o Terminal/CD.o Terminal/Terminal.o Terminal/Directory.o Terminal/File.o Terminal/LS.o Terminal/main.o Terminal/MKDir.o Terminal/Touch.o Terminal/Exit.o Terminal/RM.o
-	g++ $(CXXFLAGS) -o bin.out Terminal/Base.o Terminal/CommandBase.o Terminal/CD.o Terminal/Terminal.o Terminal/Directory.o Terminal/File.o Terminal/LS.o Terminal/main.o Terminal/MKDir.o Terminal/Touch.o Terminal/Exit.o Terminal/RM.o
-	
-Base.o: Base.cpp
-	g++ -c Terminal/Base.cpp $(CXXFLAGS)
+all: $(OBJS)
+	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
 
-CommandBase.o: CommandBase.cpp
-	g++ -c Terminal/CommandBase.cpp $(CXXFLAGS)
-	
-CD.o: CD.cpp
-	g++ -c Terminal/CD.cpp $(CXXFLAGS)
-	
-Terminal.o: Terminal.cpp
-	g++ -c Terminal/Terminal.cpp $(CXXFLAGS)
-	
-Directory.o: Directory.cpp
-	g++ -c Terminal/Directory.cpp $(CXXFLAGS)
+main.o: main.cpp,
+	$(CC) $(FLAGS) main.cpp, 
 
-File.o: File.cpp
-	g++ -c Terminal/File.cpp $(CXXFLAGS)
-	
-LS.o: LS.cpp
-	g++ -c Terminal/LS.cpp $(CXXFLAGS)
-	
-MKDir.o: MKDir.cpp
-	g++ -c Terminal/MKDir.cpp $(CXXFLAGS)
+Base.o: Base.cpp,
+	$(CC) $(FLAGS) Base.cpp, 
+
+CD.o: CD.cpp,
+	$(CC) $(FLAGS) CD.cpp, 
+
+CommandBase.o: CommandBase.cpp,
+	$(CC) $(FLAGS) CommandBase.cpp, 
+
+Directory.o: Directory.cpp,
+	$(CC) $(FLAGS) Directory.cpp, 
+
+Exit.o: Exit.cpp,
+	$(CC) $(FLAGS) Exit.cpp, 
+
+File.o: File.cpp,
+	$(CC) $(FLAGS) File.cpp, 
+
+FSJsonHandler.o: FSJsonHandler.cpp,
+	$(CC) $(FLAGS) FSJsonHandler.cpp, 
+
+jsoncpp.o: jsoncpp.cpp,
+	$(CC) $(FLAGS) jsoncpp.cpp, 
+
+LS.o: LS.cpp,
+	$(CC) $(FLAGS) LS.cpp, 
+
+MKDir.o: MKDir.cpp,
+	$(CC) $(FLAGS) MKDir.cpp, 
+
+RM.o: RM.cpp,
+	$(CC) $(FLAGS) RM.cpp, 
+
+Terminal.o: Terminal.cpp,
+	$(CC) $(FLAGS) Terminal.cpp, 
 
 Touch.o: Touch.cpp
-	g++ -c Terminal/Touch.cpp $(CXXFLAGS)
+	$(CC) $(FLAGS) Touch.cpp 
 
-Exit.o: Exit.cpp
-	g++ -c Terminal/Exit.cpp $(CXXFLAGS)
 
-RM.o: RM.cpp
-	g++ -c Terminal/RM.cpp $(CXXFLAGS)
-	
-main.o: main.cpp
-	g++ -c Terminal/main.cpp $(CXXFLAGS)
-	
 clean:
-	rm -f Terminal/*.o
+	rm -f $(OBJS) $(OUT)

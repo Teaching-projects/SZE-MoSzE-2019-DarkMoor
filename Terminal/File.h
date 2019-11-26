@@ -2,6 +2,7 @@
 #define FILE_H
 #include "Base.h"
 #include <string>
+#include "json/json.h"
 
 class Directory;
 class File : public Base
@@ -14,6 +15,8 @@ public:
 	std::string GetName() override;
 	std::string GetFullName() override;
 	Directory* GetParent() override;
+	Json::Value Jsonify() override;
+	void UnJsonify(Json::Value SubValues) override;
 	/*void SetContent(std::string content);
 	void AppendContent(std::string content);
 	void DeleteContent(std::string content);

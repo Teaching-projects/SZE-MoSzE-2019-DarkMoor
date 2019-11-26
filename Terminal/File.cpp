@@ -19,6 +19,15 @@ Directory* File::GetParent()
 {
 	return this->Parent;
 }
+Json::Value File::Jsonify()
+{
+	Json::Value v;
+	v["name"] = this->Name;
+	v["type"] = "file";
+	return v;
+}
+void File::UnJsonify(Json::Value SubValues)
+{}
 std::string File::GetFullName()
 {
 	if (this->Parent != nullptr)

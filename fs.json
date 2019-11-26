@@ -1,0 +1,42 @@
+{
+	"name" : "/",
+	"subelements" : 
+	[
+		{
+			"name" : "dir1",
+			"subelements" : 
+			[
+				{
+					"name" : "dir11",
+					"subelements" : [],
+					"type" : "directory"
+				},
+				{
+					"name" : "dir12",
+					"subelements" : [],
+					"type" : "directory"
+				},
+				{
+					"name" : "file11",
+					"type" : "file"
+				}
+			],
+			"type" : "directory"
+		},
+		{
+			"name" : "dir2",
+			"subelements" : [],
+			"type" : "directory"
+		},
+		{
+			"name" : "file1",
+			"type" : "file"
+		},
+		{
+			"name" : "asdasd",
+			"subelements" : [],
+			"type" : "directory"
+		}
+	],
+	"type" : "directory"
+}
