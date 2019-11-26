@@ -43,6 +43,10 @@ Directory* Directory::GetParent()
 
 Directory* Directory::AddDirectory(std::string dirname)
 {
+	if (GetSubelement(dirname) || dirname == "." || dirname == "..")
+	{
+		return nullptr;
+	}
 	Directory* dir = new Directory(dirname, this);
 	SubDirectories.push_back(dir);
 	return dir;
@@ -50,6 +54,14 @@ Directory* Directory::AddDirectory(std::string dirname)
 
 Base* Directory::GetSubelement(std::string dirname)
 {
+	if (dirname == "..")
+	{
+		return Parent;
+	}
+	if (dirname == ".")
+	{
+		return this;
+	}
 	for (auto dir : SubDirectories)
 	{
 		if (dir->GetName() == dirname)
@@ -62,6 +74,10 @@ Base* Directory::GetSubelement(std::string dirname)
 
 File* Directory::AddFile(std::string path)
 {
+	if (GetSubelement(path) || path == "." || path == "..")
+	{
+		return nullptr;
+	}
 	File* file = new File (path, this);
 	SubDirectories.push_back(file);
 	return file;

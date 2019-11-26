@@ -7,9 +7,8 @@
 class Directory;
 class MKDir : public CommandBase
 {
-	Directory* AddDirectory(std::string path);
-	Directory* AddDirectoryRecursive(std::string path, Directory* startDir);
-
+	void AddDirectory(std::string path);
+	
 	void ResetOptions() override;
 	bool SetOptions(char c) override;
 public:

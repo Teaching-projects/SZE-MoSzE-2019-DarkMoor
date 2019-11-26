@@ -21,32 +21,45 @@ void MKDir::Execute(std::string params)
 	args = RemoveOptions(args); 
 	for (auto t : args)
 	{
-		if (AddDirectory(t) == nullptr)
-		{
-			std::cout << "Cannot create directory '" + t + "': File exists" << std::endl;
-		}
+		AddDirectory(t);
 	}
 }
-Directory* MKDir::AddDirectory(std::string path)
+void MKDir::AddDirectory(std::string path)
 {
+	std::string originalpath = path;
 	Base* b = nullptr;
 	Directory* dir = GetStartDirectory(path);
-	for (auto t : SplitPath(path))
+	if (dir == nullptr)
 	{
+		std::cout << "mkdir: cannot create directory '" + originalpath + "': No such file or directory" << std::endl;
+		return;
+	}
+	std::vector<std::string> dirnames = SplitPath(path);
+	int i = 1;
+	for (auto t : dirnames)
+	{
+		if (i == dirnames.size())
+		{
+			if (!dir->AddDirectory(t))
+			{
+				std::cout << "cannot create directory '" + originalpath + "': File exists" << std::endl;
+				return;
+			}
+		}
 		b = dir->GetSubelement(t);
 		if (b == nullptr)
 		{
-			return nullptr;
+			std::cout << "mkdir: cannot create directory '" + originalpath + "': No such file or directory" << std::endl;
+			return;
 		}
-		if (AddDirectory(t) == nullptr);
+		dir = dynamic_cast<Directory*>(b);
+		if (dir == nullptr)
+		{
+			std::cout << "mkdir: cannot create directory '" + originalpath + "': Not a directory" << std::endl;
+			return;
+		}
+		i++;
 	}
-
-	
-	return nullptr;
-}
-Directory* MKDir::AddDirectoryRecursive(std::string path, Directory* startDir)
-{
-	return nullptr;
 }
 void MKDir::ResetOptions()
 {
