@@ -10,10 +10,13 @@ protected:
 	Directory* Parent;
 public:
 	Base(std::string Name, Directory* Parent);
-	virtual std::string GetName() = 0;
+	virtual std::string GetName();
+	virtual void SetName(std::string);
 	virtual std::string GetFullName() = 0;
-	virtual Directory* GetParent() = 0;
 	virtual Json::Value Jsonify() = 0;
 	virtual void UnJsonify(Json::Value SubValues) = 0;
+
+	virtual Directory* GetParent();
+	virtual void SetParent(Directory* Parent);
 };
 #endif

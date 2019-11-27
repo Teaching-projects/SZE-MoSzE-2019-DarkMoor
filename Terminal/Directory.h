@@ -13,14 +13,13 @@ private:
 public:
 	Directory(std::string Name, Directory* Parent);
 	~Directory();
-	std::string GetName() override;
 	std::string GetFullName() override;
-	Directory* GetParent() override;
 	Directory* AddDirectory(std::string path);
 	void ListDirectories();
-	bool RemoveSubelement(std::string path);
+	bool RemoveSubelement(std::string path, bool perma = true);
 	Base* GetSubelement(std::string path);
 	File* AddFile(std::string path);
+	bool MoveElement(Base* MovableObject, std::string Name);
 	Json::Value Jsonify() override;
 	void UnJsonify(Json::Value SubValues) override;
 };

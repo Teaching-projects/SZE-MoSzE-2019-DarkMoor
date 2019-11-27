@@ -15,6 +15,7 @@
 #include "Touch.h"
 #include "json/json.h"
 #include "Echo.h"
+#include "MV.h"
 
 
 Terminal* Terminal::terminal = nullptr;
@@ -78,6 +79,7 @@ Terminal* Terminal::GetInstance()
 		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
 		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
 		Terminal::terminal->AddCommand(new Echo("echo", "", 0));
+		Terminal::terminal->AddCommand(new MV("mv", "", 2));
 	}
 	return Terminal::terminal;
 }
@@ -94,6 +96,7 @@ Terminal* Terminal::GetInstance(Json::Value RootValue)
 		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
 		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
 		Terminal::terminal->AddCommand(new Echo("echo", "", 0));
+		Terminal::terminal->AddCommand(new MV("mv", "", 2));
 	}
 	return Terminal::terminal;
 }

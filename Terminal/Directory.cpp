@@ -14,7 +14,6 @@ Directory::~Directory()
 	{
 		delete dir;
 	}
-	delete Parent;
 }
 
 std::string Directory::GetFullName()
@@ -31,14 +30,6 @@ std::string Directory::GetFullName()
 		}
 	}
 	return this->Name;
-}
-std::string Directory::GetName()
-{
-	return this->Name;
-}
-Directory* Directory::GetParent()
-{
-	return this->Parent;
 }
 
 Directory* Directory::AddDirectory(std::string dirname)
@@ -81,6 +72,20 @@ File* Directory::AddFile(std::string path)
 	File* file = new File(path, this);
 	SubDirectories.push_back(file);
 	return file;
+}
+
+bool Directory::MoveElement(Base* MovableObject, std::string Name)
+{
+	Directory* dir = MovableObject->GetParent();
+	if (dir)
+	{
+		dir->RemoveSubelement(MovableObject->GetName(), false);
+		SubDirectories.push_back(MovableObject);
+		MovableObject->SetParent(this);
+		MovableObject->SetName(Name);
+		return true;
+	}
+	return false;
 }
 
 Json::Value Directory::Jsonify()
@@ -152,17 +157,18 @@ void Directory::ListDirectories()
 	}
 }
 
-bool Directory::RemoveSubelement(std::string path)
+bool Directory::RemoveSubelement(std::string path, bool perma)
 {
 	int i = 0;
 	for (auto dir : SubDirectories)
 	{
 		if (dir->GetName() == path)
 		{
-			delete dir;
+			if (perma) delete dir;
 			SubDirectories.erase(SubDirectories.begin() + i);
 			return true;
 		}
+		i++;
 	}
 	return false;
 }

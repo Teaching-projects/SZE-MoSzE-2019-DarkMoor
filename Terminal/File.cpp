@@ -9,17 +9,8 @@ File::File(std::string Name, Directory* Parent, std::string Content):Base(Name,P
 
 File::~File()
 {
-	delete Parent;
 }
 
-std::string File::GetName()
-{
-	return this->Name;
-}
-Directory* File::GetParent()
-{
-	return this->Parent;
-}
 Json::Value File::Jsonify()
 {
 	Json::Value v;

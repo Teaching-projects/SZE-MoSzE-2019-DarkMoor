@@ -44,6 +44,7 @@
     <ClCompile Include="Touch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="MV.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="json\json-forwards.h" />
@@ -87,6 +88,7 @@
     <ClInclude Include="Touch.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="MV.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\fs.json" />
