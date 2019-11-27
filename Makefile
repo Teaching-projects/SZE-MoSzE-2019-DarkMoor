@@ -56,4 +56,4 @@ Echo.o: Echo.cpp
 
 
 clean:
-	rm -f $(OBJS) $(OUT)
+	rm -f $(OBJS)
