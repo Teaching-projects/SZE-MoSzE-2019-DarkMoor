@@ -36,6 +36,11 @@
 			"name" : "asdasd",
 			"subelements" : [],
 			"type" : "directory"
+		},
+		{
+			"name" : "asdasdasd",
+			"subelements" : [],
+			"type" : "directory"
 		}
 	],
 	"type" : "directory"

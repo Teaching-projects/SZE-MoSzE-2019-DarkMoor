@@ -17,7 +17,6 @@ public:
 	Directory* GetParent() override;
 	Json::Value Jsonify() override;
 	void UnJsonify(Json::Value SubValues) override;
-	/*void SetContent(std::string content);
 	void SetContent(std::string content);
 	void AppendContent(std::string content);
 	void DeleteContent();
