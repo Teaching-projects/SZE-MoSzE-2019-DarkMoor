@@ -4,7 +4,7 @@ HEADER	= Terminal/Base.h, Terminal/CD.h, Terminal/CommandBase.h, Terminal/Direct
 OUT	= bin.out
 CC	 = g++
 FLAGS	 = -g -c -Wall -O2 -std=c++11 -std=c++0x
-LFLAGS	 = -g -c -std=c++11 -std=c++0x
+LFLAGS	 = -std=c++11 -std=c++0x
 
 all: $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
