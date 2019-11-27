@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\fs.json" />
+    <None Include="..\Makefile" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">

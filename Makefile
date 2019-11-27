@@ -1,7 +1,7 @@
-OBJS	= Terminal/main.o Terminal/Base.o Terminal/CD.o Terminal/CommandBase.o Terminal/Directory.o Terminal/Exit.o Terminal/File.o Terminal/FSJsonHandler.o Terminal/jsoncpp.o Terminal/LS.o Terminal/MKDir.o Terminal/RM.o Terminal/Terminal.o Terminal/Touch.o
-SOURCE	= Terminal/main.cpp, Terminal/Base.cpp, Terminal/CD.cpp, Terminal/CommandBase.cpp, Terminal/Directory.cpp, Terminal/Exit.cpp, Terminal/File.cpp, Terminal/FSJsonHandler.cpp, Terminal/jsoncpp.cpp, Terminal/LS.cpp, Terminal/MKDir.cpp, Terminal/RM.cpp, Terminal/Terminal.cpp, Terminal/Touch.cpp
-HEADER	= Terminal/Base.h, Terminal/CD.h, Terminal/CommandBase.h, Terminal/Directory.h, Terminal/Exit.h, Terminal/File.h, Terminal/FSJsonHandler.h, Terminal/json\json-forwards.h, Terminal/json\json.h, Terminal/LS.h, Terminal/MKDir.h, Terminal/RM.h, Terminal/Terminal.h, Terminal/Touch.h,
-OUT	= myproject1
+OBJS	= Terminal/main.o Terminal/Base.o Terminal/CD.o Terminal/CommandBase.o Terminal/Directory.o Terminal/Exit.o Terminal/File.o Terminal/FSJsonHandler.o Terminal/jsoncpp.o Terminal/LS.o Terminal/MKDir.o Terminal/RM.o Terminal/Terminal.o Terminal/Touch.o Terminal/Echo.o
+SOURCE	= Terminal/main.cpp, Terminal/Base.cpp, Terminal/CD.cpp, Terminal/CommandBase.cpp, Terminal/Directory.cpp, Terminal/Exit.cpp, Terminal/File.cpp, Terminal/FSJsonHandler.cpp, Terminal/jsoncpp.cpp, Terminal/LS.cpp, Terminal/MKDir.cpp, Terminal/RM.cpp, Terminal/Terminal.cpp, Terminal/Touch.cpp, Terminal/Echo.cpp
+HEADER	= Terminal/Base.h, Terminal/CD.h, Terminal/CommandBase.h, Terminal/Directory.h, Terminal/Exit.h, Terminal/File.h, Terminal/FSJsonHandler.h, Terminal/json\json-forwards.h, Terminal/json\json.h, Terminal/LS.h, Terminal/MKDir.h, Terminal/RM.h, Terminal/Terminal.h, Terminal/Touch.h, Terminal/Echo.h
+OUT	= bin.out
 CC	 = g++
 FLAGS	 = -g -c -Wall -O2 -std=c++11 -std=c++0x
 LFLAGS	 = 
@@ -49,7 +49,10 @@ Terminal.o: Terminal.cpp,
 	$(CC) $(FLAGS) Terminal/Terminal.cpp, 
 
 Touch.o: Touch.cpp
-	$(CC) $(FLAGS) Terminal/Touch.cpp 
+	$(CC) $(FLAGS) Terminal/Touch.cpp,
+
+Echo.o: Echo.cpp
+	$(CC) $(FLAGS) Terminal/Echo.cpp 
 
 
 clean:
