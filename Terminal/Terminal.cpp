@@ -3,7 +3,9 @@
 #include "Terminal.h"
 #include <sstream>
 #include <vector>
+#include "Base.h"
 #include "Directory.h"
+#include "File.h"
 #include "CommandBase.h"
 #include "CD.h"
 #include "LS.h"
@@ -11,6 +13,7 @@
 #include "Exit.h"
 #include "RM.h"
 #include "Touch.h"
+#include "Echo.h"
 
 
 Terminal* Terminal::terminal = nullptr;
@@ -46,6 +49,7 @@ Terminal* Terminal::GetInstance()
 		Terminal::terminal->AddCommand(new Exit("exit", "", 0));
 		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
 		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
+		Terminal::terminal->AddCommand(new Echo("echo", "", 0));
 	}
 	return Terminal::terminal;
 }
@@ -133,8 +137,63 @@ void Terminal::SetStdoPath(std::string path)
 	stdoPath = path;
 }
 
-void Terminal::StdOut(std::string)
-{}
+void Terminal::StdOut(std::string text)
+{
+	if (this->stdoRedirect)
+	{
+		StdOutWriteFile(text);
+	}
+	else
+	{
+		std::cout << text << std::endl;
+	}
+}
+
+void Terminal::StdOutWriteFile(std::string text)
+{
+	std::string originalpath = this->stdoPath;
+	Base* b = nullptr;
+	Directory* dir = CommandBase::GetStartDirectory(this->stdoPath);
+	if (dir == nullptr)
+	{
+		std::cout << originalpath + ": No such file or directory" << std::endl;
+		return;
+	}
+	std::vector<std::string> dirnames = CommandBase::SplitPath(this->stdoPath);
+	int i = 1;
+	for (auto t : dirnames)
+	{
+		if (i == dirnames.size())
+		{
+			File* f = nullptr;
+			b = dir->GetSubelement(t);
+			if (b == nullptr)
+			{
+				f = dir->AddFile(t);
+				f->SetContent(text);
+			}
+			else
+			{
+				f = dynamic_cast<File*>(b);
+				if (f != nullptr) f->SetContent(text);
+			}
+			return;
+		}
+		b = dir->GetSubelement(t);
+		if (b == nullptr)
+		{
+			std::cout << originalpath + ": No such file or directory" << std::endl;
+			return;
+		}
+		dir = dynamic_cast<Directory*>(b);
+		if (dir == nullptr)
+		{
+			std::cout << originalpath + ": Not a directory" << std::endl;
+			return;
+		}
+		i++;
+	}
+}
 
 std::string Terminal::Trim(std::string str)
 {

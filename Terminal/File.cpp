@@ -2,7 +2,7 @@
 #include "Directory.h"
 #include <string>
 
-File::File(std::string Name, Directory* Parent, std::string Content = ""):Base(Name,Parent)
+File::File(std::string Name, Directory* Parent, std::string Content):Base(Name,Parent)
 {
 	this->content = Content;
 }

@@ -18,10 +18,13 @@ void Echo::Execute(std::string params)
 		return;
 	}
 	args = RemoveOptions(args);
+	std::string echoString = "";
 	for (auto t : args)
 	{
-		std::cout << t << std::endl;
+		echoString += " " + t;
 	}
+	echoString.erase(0,1);
+	Terminal::GetInstance()->StdOut(echoString);
 }
 void Echo::ResetOptions()
 {

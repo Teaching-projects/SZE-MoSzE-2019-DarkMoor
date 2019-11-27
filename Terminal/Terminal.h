@@ -20,6 +20,7 @@ private:
 	Terminal();
 
 	std::string Trim(std::string str);
+	void StdOutWriteFile(std::string text);
 	void PrintActualDir();
 public:
 	~Terminal();

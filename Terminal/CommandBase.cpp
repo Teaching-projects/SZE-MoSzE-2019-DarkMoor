@@ -35,7 +35,7 @@ std::vector<std::string> CommandBase::GetArgs(std::string params)
 	while (std::getline(ss, arg, ' '))
 	{
 		arg = Trim(arg);
-		if (arg.length() != 0) continue;
+		if (arg.length() == 0) continue;
 		if (arg[0] == '"') quote++;
 		if (arg[arg.length()-1] == '"') quote--;
 		if (quote == 0)
