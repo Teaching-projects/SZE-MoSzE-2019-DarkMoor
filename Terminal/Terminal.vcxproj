@@ -158,6 +158,8 @@
     <ClCompile Include="Echo.cpp" />
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="File.cpp" />
+    <ClCompile Include="FSJsonHandler.cpp" />
+    <ClCompile Include="jsoncpp.cpp" />
     <ClCompile Include="LS.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MKDir.cpp" />
@@ -173,11 +175,17 @@
     <ClInclude Include="Echo.h" />
     <ClInclude Include="Exit.h" />
     <ClInclude Include="File.h" />
+    <ClInclude Include="FSJsonHandler.h" />
+    <ClInclude Include="json\json-forwards.h" />
+    <ClInclude Include="json\json.h" />
     <ClInclude Include="LS.h" />
     <ClInclude Include="MKDir.h" />
     <ClInclude Include="RM.h" />
     <ClInclude Include="Terminal.h" />
     <ClInclude Include="Touch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\fs.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

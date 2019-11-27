@@ -13,6 +13,7 @@
 #include "Exit.h"
 #include "RM.h"
 #include "Touch.h"
+#include "json/json.h"
 #include "Echo.h"
 
 
@@ -23,6 +24,33 @@ Directory* actual;
 Terminal::Terminal()
 {
 	this->root = new Directory("/", nullptr);
+	this->actual = Terminal::root;
+	this->exit = false;
+}
+
+Terminal::Terminal(Json::Value RootValue)
+{
+	if (RootValue.isMember("name") && RootValue.isMember("type"))
+	{
+		if (RootValue["type"].asString() == "directory")
+		{
+			this->root = new Directory(RootValue["name"].asString(), nullptr);
+			if (RootValue.isMember("subelements"))
+			{
+				root->UnJsonify(RootValue["subelements"]);
+			}
+		}
+		else
+		{
+			std::cout << "UnJsonify error at: root" << std::endl;
+			this->root = new Directory("/", nullptr);
+		}
+	}
+	else
+	{
+		std::cout << "UnJsonify error at: root" << std::endl;
+		this->root = new Directory("/", nullptr);
+	}
 	this->actual = Terminal::root;
 	this->exit = false;
 	this->stdoRedirect = false;
@@ -50,6 +78,21 @@ Terminal* Terminal::GetInstance()
 		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
 		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
 		Terminal::terminal->AddCommand(new Echo("echo", "", 0));
+	}
+	return Terminal::terminal;
+}
+
+Terminal* Terminal::GetInstance(Json::Value RootValue)
+{
+	if (Terminal::terminal == nullptr)
+	{
+		Terminal::terminal = new Terminal(RootValue);
+		Terminal::terminal->AddCommand(new LS("ls", "", 0));
+		Terminal::terminal->AddCommand(new MKDir("mkdir", "", 1));
+		Terminal::terminal->AddCommand(new CD("cd", "", 1));
+		Terminal::terminal->AddCommand(new Exit("exit", "", 0));
+		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
+		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
 	}
 	return Terminal::terminal;
 }
@@ -193,6 +236,11 @@ void Terminal::StdOutWriteFile(std::string text)
 		}
 		i++;
 	}
+}
+
+Json::Value Terminal::GetFSAsJson()
+{
+	return this->root->Jsonify();
 }
 
 std::string Terminal::Trim(std::string str)

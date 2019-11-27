@@ -20,6 +20,15 @@ Directory* File::GetParent()
 {
 	return this->Parent;
 }
+Json::Value File::Jsonify()
+{
+	Json::Value v;
+	v["name"] = this->Name;
+	v["type"] = "file";
+	return v;
+}
+void File::UnJsonify(Json::Value SubValues)
+{}
 void File::SetContent(std::string content)
 {
 	this->content = content;

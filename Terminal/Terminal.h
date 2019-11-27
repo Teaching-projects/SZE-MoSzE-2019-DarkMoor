@@ -2,6 +2,7 @@
 #define TERMINAL_H
 #include <string>
 #include <map>
+#include "json/json.h"
 
 class CommandBase;
 class Directory;
@@ -18,6 +19,7 @@ private:
 	std::string stdoPath;
 
 	Terminal();
+	Terminal(Json::Value RootValue);
 
 	std::string Trim(std::string str);
 	void StdOutWriteFile(std::string text);
@@ -26,6 +28,7 @@ public:
 	~Terminal();
 
 	static Terminal* GetInstance();
+	static Terminal* GetInstance(Json::Value RootValue);
 
 	Directory* GetRoot();
 	Directory* GetActual();
@@ -34,6 +37,7 @@ public:
 	void AddCommand(CommandBase* commmand);
 	bool GetExit();
 	void SetExit(bool exit);
+	Json::Value GetFSAsJson();
 	bool GetStdoRedirect();
 	void SetStdoRedirect(bool b);
 	void SetStdoPath(std::string path);

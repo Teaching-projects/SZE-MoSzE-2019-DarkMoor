@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="JSONLib">
+      <UniqueIdentifier>{87d43c81-1412-4a2a-978d-779e0b7254a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Terminal.cpp">
@@ -50,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="Touch.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FSJsonHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp.cpp">
+      <Filter>JSONLib</Filter>
     </ClCompile>
     <ClCompile Include="Echo.cpp">
       <Filter>Source Files</Filter>
@@ -89,6 +98,18 @@
     <ClInclude Include="Touch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FSJsonHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json-forwards.h">
+      <Filter>JSONLib</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json.h">
+      <Filter>JSONLib</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\fs.json" />
     <ClInclude Include="Echo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
