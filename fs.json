@@ -17,6 +17,7 @@
 					"type" : "directory"
 				},
 				{
+					"content" : "",
 					"name" : "file11",
 					"type" : "file"
 				}
@@ -29,6 +30,7 @@
 			"type" : "directory"
 		},
 		{
+			"content" : "",
 			"name" : "file1",
 			"type" : "file"
 		},
@@ -41,6 +43,11 @@
 			"name" : "asdasdasd",
 			"subelements" : [],
 			"type" : "directory"
+		},
+		{
+			"content" : "asd asd asd",
+			"name" : "asd.txt",
+			"type" : "file"
 		}
 	],
 	"type" : "directory"

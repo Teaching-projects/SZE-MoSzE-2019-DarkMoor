@@ -118,6 +118,10 @@ void Directory::UnJsonify(Json::Value SubValues)
 			else if (SubValues[i]["type"].asString() == "file")
 			{
 				File* file = new File(SubValues[i]["name"].asString(), this);
+				if (SubValues[i].isMember("content"))
+				{
+					file->SetContent(SubValues[i]["content"].asString());
+				}
 				SubDirectories.push_back(file);
 			}
 			else

@@ -93,6 +93,7 @@ Terminal* Terminal::GetInstance(Json::Value RootValue)
 		Terminal::terminal->AddCommand(new Exit("exit", "", 0));
 		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
 		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
+		Terminal::terminal->AddCommand(new Echo("echo", "", 0));
 	}
 	return Terminal::terminal;
 }

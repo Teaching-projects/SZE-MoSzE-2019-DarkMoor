@@ -25,6 +25,7 @@ Json::Value File::Jsonify()
 	Json::Value v;
 	v["name"] = this->Name;
 	v["type"] = "file";
+	v["content"] = content;
 	return v;
 }
 void File::UnJsonify(Json::Value SubValues)

@@ -36,8 +36,16 @@ std::vector<std::string> CommandBase::GetArgs(std::string params)
 	{
 		arg = Trim(arg);
 		if (arg.length() == 0) continue;
-		if (arg[0] == '"') quote++;
-		if (arg[arg.length()-1] == '"') quote--;
+		if (arg[0] == '"' && arg.length() > 1) 
+		{
+			if (quote == 0) arg.erase(0, 1);
+			quote++; 
+		}
+		if (arg[arg.length() - 1] == '"') 
+		{ 
+			quote--; 
+			if (quote == 0) arg.erase(arg.length() - 1);
+		}
 		if (quote == 0)
 		{
 			if (arg == ">")
@@ -50,9 +58,7 @@ std::vector<std::string> CommandBase::GetArgs(std::string params)
 				if (text.length() > 0)
 				{
 					text += " " + arg;
-					text.erase(0,2);
-					text.erase(text.length() - 1);
-					argv.push_back(text);
+					argv.push_back(Trim(text));
 					text = "";
 				}
 				else argv.push_back(arg);
