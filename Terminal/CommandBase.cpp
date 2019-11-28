@@ -12,6 +12,9 @@ CommandBase::CommandBase(std::string Name, std::string Options, int NonOptionalP
 	this->name = Name;
 }
 
+CommandBase::~CommandBase()
+{}
+
 std::string CommandBase::GetName()
 {
 	return this->name;

@@ -10,6 +10,7 @@ protected:
 	Directory* Parent;
 public:
 	Base(std::string Name, Directory* Parent);
+	virtual ~Base() = 0;
 	virtual std::string GetName();
 	virtual void SetName(std::string);
 	virtual std::string GetFullName() = 0;

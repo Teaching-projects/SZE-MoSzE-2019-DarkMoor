@@ -7,6 +7,7 @@ Base::Base(std::string Name, Directory* Parent)
 	this->Name = Name;
 	this->Parent = Parent;
 }
+Base::~Base(){}
 
 Directory* Base::GetParent()
 {
