@@ -65,6 +65,7 @@ void FSJsonHandler::WriteFile(std::string Path)
 		{
 			file << root;
 			file.close();
+			delete& root;
 		}
 		catch (const std::exception& ex)
 		{

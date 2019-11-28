@@ -38,7 +38,7 @@ void MV::MoveElement(std::string source, std::string target)
 	}
 	Directory* last = dir;
 	std::vector<std::string> dirnames = SplitPath(target);
-	int i = 1;
+	unsigned int i = 1;
 	for (auto t : dirnames)
 	{
 		b = dir->GetSubelement(t);
@@ -88,7 +88,7 @@ Base* MV::GetSource(std::string path)
 		return nullptr;
 	}
 	std::vector<std::string> dirnames = SplitPath(path);
-	int i = 1;
+	unsigned int i = 1;
 	for (auto t : dirnames)
 	{
 		b = dir->GetSubelement(t);

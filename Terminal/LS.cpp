@@ -53,7 +53,7 @@ void LS::GetDirectory(std::string path)
 		return;
 	}
 	std::vector<std::string> dirnames = SplitPath(path);
-	int i = 1;
+	unsigned int i = 1;
 	for (auto t : dirnames)
 	{
 		b = dir->GetSubelement(t);

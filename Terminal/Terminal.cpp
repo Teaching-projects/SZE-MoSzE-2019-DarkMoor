@@ -207,7 +207,7 @@ void Terminal::StdOutWriteFile(std::string text)
 		return;
 	}
 	std::vector<std::string> dirnames = CommandBase::SplitPath(this->stdoPath);
-	int i = 1;
+	unsigned int i = 1;
 	for (auto t : dirnames)
 	{
 		if (i == dirnames.size())

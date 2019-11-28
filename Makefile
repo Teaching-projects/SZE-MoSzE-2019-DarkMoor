@@ -3,8 +3,8 @@ SOURCE	= Terminal/main.cpp, Terminal/Base.cpp, Terminal/CD.cpp, Terminal/Command
 HEADER	= Terminal/Base.h, Terminal/CD.h, Terminal/CommandBase.h, Terminal/Directory.h, Terminal/Exit.h, Terminal/File.h, Terminal/FSJsonHandler.h, Terminal/json\json-forwards.h, Terminal/json\json.h, Terminal/LS.h, Terminal/MKDir.h, Terminal/RM.h, Terminal/Terminal.h, Terminal/Touch.h, Terminal/Echo.h Terminal/MV.h
 OUT	= bin.out
 CC	 = g++
-FLAGS	 = -g -c -Wall -O2 -std=c++11 -std=c++0x -fsanitize=address
-CXXFLAGS	 = -std=c++11 -std=c++0x -Wall -O2 -fsanitize=address
+FLAGS	 = -g -c -Wall -O2 -std=c++11 -std=c++0x
+CXXFLAGS	 = -std=c++11 -std=c++0x -Wall -O2
 
 all: $(OBJS)
 	$(CC) -g $(OBJS) -o $(OUT) $(CXXFLAGS)
