@@ -1,13 +1,29 @@
-OBJS	= Terminal/main.o Terminal/Base.o Terminal/CD.o Terminal/CommandBase.o Terminal/Directory.o Terminal/Exit.o Terminal/File.o Terminal/FSJsonHandler.o Terminal/jsoncpp.o Terminal/LS.o Terminal/MKDir.o Terminal/RM.o Terminal/Terminal.o Terminal/Touch.o Terminal/Echo.o Terminal/MV.o
+OBJS	= Terminal/Base.o Terminal/CD.o Terminal/CommandBase.o Terminal/Directory.o Terminal/Exit.o Terminal/File.o Terminal/FSJsonHandler.o Terminal/jsoncpp.o Terminal/LS.o Terminal/MKDir.o Terminal/RM.o Terminal/Terminal.o Terminal/Touch.o Terminal/Echo.o Terminal/MV.o
+EXECUTABLE_OBJS	= Terminal/main.o
+TEST_OBJS	= 
 SOURCE	= Terminal/main.cpp, Terminal/Base.cpp, Terminal/CD.cpp, Terminal/CommandBase.cpp, Terminal/Directory.cpp, Terminal/Exit.cpp, Terminal/File.cpp, Terminal/FSJsonHandler.cpp, Terminal/jsoncpp.cpp, Terminal/LS.cpp, Terminal/MKDir.cpp, Terminal/RM.cpp, Terminal/Terminal.cpp, Terminal/Touch.cpp, Terminal/Echo.cpp Terminal/MV.cpp
 HEADER	= Terminal/Base.h, Terminal/CD.h, Terminal/CommandBase.h, Terminal/Directory.h, Terminal/Exit.h, Terminal/File.h, Terminal/FSJsonHandler.h, Terminal/json\json-forwards.h, Terminal/json\json.h, Terminal/LS.h, Terminal/MKDir.h, Terminal/RM.h, Terminal/Terminal.h, Terminal/Touch.h, Terminal/Echo.h Terminal/MV.h
 OUT	= bin.out
 CC	 = g++
 FLAGS	 = -g -c -std=c++11 -std=c++0x
-CXXFLAGS	= -std=c++11 -std=c++0x -Wall -g -O2
+CXXFLAGS	= -std=c++11 -std=c++0x -Wall
 
-all: $(OBJS)
-	$(CC) $(OBJS) -o $(OUT) $(CXXFLAGS)
+all: release
+
+debug: CXXFLAGS += -g
+debug: executable
+
+release: CXXFLAGS += -O3
+release: executable
+
+gtest: CXXFLAGS += -g
+gtest: 
+gtest: OUT := bin.test
+gtest: $(OBJS) $(TEST_OBJS)
+	$(CC) $(OBJS) $(TEST_OBJS) -o $(OUT) $(CXXFLAGS)
+	
+executable: $(OBJS) $(EXECUTABLE_OBJS)
+	$(CC) $(OBJS) $(EXECUTABLE_OBJS) -o $(OUT) $(CXXFLAGS)
 
 main.o: main.cpp,
 	$(CC) $(FLAGS) Terminal/main.cpp,
@@ -59,4 +75,4 @@ MV.o: MV.cpp
 
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(EXECUTABLE_OBJS) $(TEST_OBJS)
