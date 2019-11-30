@@ -38,3 +38,4 @@ workflows:
               only:
                 - master
                 - dev
+                - task6
