@@ -29,6 +29,7 @@ workflows:
               only:
                 - master
                 - dev
+                - task6
       - test:
           requires:
             - build
