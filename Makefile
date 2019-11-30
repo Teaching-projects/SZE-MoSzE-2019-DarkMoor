@@ -4,15 +4,9 @@ HEADER	= Terminal/Base.h, Terminal/CD.h, Terminal/CommandBase.h, Terminal/Direct
 OUT	= bin.out
 CC	 = g++
 FLAGS	 = -g -c -std=c++11 -std=c++0x
-CXXFLAGS	= -std=c++11 -std=c++0x -Wall
+CXXFLAGS	= -std=c++11 -std=c++0x -Wall -g -O2
 
 all: $(OBJS)
-	$(CC) $(OBJS) -o $(OUT) $(CXXFLAGS) -g -O2 -fsanitize=address
-
-debug: $(OBJS)
-	$(CC) $(OBJS) -o $(OUT) $(CXXFLAGS)
-
-release: $(OBJS)
 	$(CC) $(OBJS) -o $(OUT) $(CXXFLAGS)
 
 main.o: main.cpp,
