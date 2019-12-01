@@ -49,6 +49,11 @@ void MV::MoveElement(std::string source, std::string target)
 				std::cout << "mv: cannot stat '" + originaltarget + "': No such file or directory" << std::endl;
 				return;
 			}
+			if (dir == Terminal::GetInstance()->GetRoot())
+			{
+				dir->MoveElement(s, s->GetName());
+				return;
+			}
 			dir->MoveElement(s, t);
 			return;
 		}
