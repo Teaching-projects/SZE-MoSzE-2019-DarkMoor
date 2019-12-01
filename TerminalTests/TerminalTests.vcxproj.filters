@@ -48,6 +48,10 @@
       <Filter>Terminal</Filter>
     </ClCompile>
     <ClCompile Include="DirectoryTest.cpp" />
+    <ClCompile Include="TerminalTests.cpp" />
+    <ClCompile Include="MKDirTest.cpp" />
+    <ClCompile Include="CDTest.cpp" />
+    <ClCompile Include="MVTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Terminal">
@@ -103,5 +107,8 @@
     <ClInclude Include="..\Terminal\Touch.h">
       <Filter>Terminal</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

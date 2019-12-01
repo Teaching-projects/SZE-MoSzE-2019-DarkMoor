@@ -48,7 +48,10 @@
     <ClCompile Include="..\Terminal\RM.cpp" />
     <ClCompile Include="..\Terminal\Terminal.cpp" />
     <ClCompile Include="..\Terminal\Touch.cpp" />
+    <ClCompile Include="CDTest.cpp" />
     <ClCompile Include="DirectoryTest.cpp" />
+    <ClCompile Include="MKDirTest.cpp" />
+    <ClCompile Include="MVTest.cpp" />
     <ClCompile Include="TerminalTests.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>

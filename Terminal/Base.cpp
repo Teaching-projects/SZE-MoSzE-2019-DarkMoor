@@ -27,3 +27,15 @@ void Base::SetName(std::string Name)
 {
 	this->Name = Name;
 }
+
+bool Base::IsChildOf(Directory* dir)
+{
+	if (dir == nullptr) return false;
+	if (dir == this) return true;
+	if (Parent == nullptr) return false;
+	if (dir == Parent)
+	{
+		return true;
+	}
+	return Parent->IsChildOf(dir);
+}

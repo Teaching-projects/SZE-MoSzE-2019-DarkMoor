@@ -14,6 +14,7 @@ public:
 	virtual std::string GetName();
 	virtual void SetName(std::string);
 	virtual std::string GetFullName() = 0;
+	virtual bool IsChildOf(Directory* dir);
 	virtual Json::Value Jsonify() = 0;
 	virtual void UnJsonify(Json::Value SubValues) = 0;
 

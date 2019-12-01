@@ -27,6 +27,7 @@ Terminal::Terminal()
 	this->root = new Directory("/", nullptr);
 	this->actual = Terminal::root;
 	this->exit = false;
+	this->stdoRedirect = false;
 }
 
 Terminal::Terminal(Json::Value RootValue)
@@ -65,6 +66,7 @@ Terminal::~Terminal()
 		delete c.second;
 	}
 	commands.clear();
+	Terminal::terminal = nullptr;
 }
 
 Terminal* Terminal::GetInstance()

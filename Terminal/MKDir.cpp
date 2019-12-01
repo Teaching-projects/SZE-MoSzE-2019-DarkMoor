@@ -15,6 +15,7 @@ void MKDir::Execute(std::string params)
 	std::vector<std::string> args = this->GetArgs(params);
 	if (!this->ValidateParams(args))
 	{
+
 		ResetOptions();
 		return;
 	}
