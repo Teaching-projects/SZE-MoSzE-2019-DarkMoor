@@ -1,78 +1,64 @@
-OBJS	= Terminal/Base.o Terminal/CD.o Terminal/CommandBase.o Terminal/Directory.o Terminal/Exit.o Terminal/File.o Terminal/FSJsonHandler.o Terminal/jsoncpp.o Terminal/LS.o Terminal/MKDir.o Terminal/RM.o Terminal/Terminal.o Terminal/Touch.o Terminal/Echo.o Terminal/MV.o
-EXECUTABLE_OBJS	= Terminal/main.o
-TEST_OBJS	= 
-SOURCE	= Terminal/main.cpp, Terminal/Base.cpp, Terminal/CD.cpp, Terminal/CommandBase.cpp, Terminal/Directory.cpp, Terminal/Exit.cpp, Terminal/File.cpp, Terminal/FSJsonHandler.cpp, Terminal/jsoncpp.cpp, Terminal/LS.cpp, Terminal/MKDir.cpp, Terminal/RM.cpp, Terminal/Terminal.cpp, Terminal/Touch.cpp, Terminal/Echo.cpp Terminal/MV.cpp
-HEADER	= Terminal/Base.h, Terminal/CD.h, Terminal/CommandBase.h, Terminal/Directory.h, Terminal/Exit.h, Terminal/File.h, Terminal/FSJsonHandler.h, Terminal/json\json-forwards.h, Terminal/json\json.h, Terminal/LS.h, Terminal/MKDir.h, Terminal/RM.h, Terminal/Terminal.h, Terminal/Touch.h, Terminal/Echo.h Terminal/MV.h
+LIB_DIR	= lib
+LIBS	=
+TEST_LIBS	= $(LIB_DIR)/gtest.a $(LIB_DIR)/gtest_main.a
+
+SRC_DIR	= Terminal
+TEST_SRC_DIR	= TerminalTests
+
+OBJ_DIR	= obj
+OBJS	= $(OBJ_DIR)/Base.o $(OBJ_DIR)/CD.o $(OBJ_DIR)/CommandBase.o $(OBJ_DIR)/Directory.o $(OBJ_DIR)/Exit.o $(OBJ_DIR)/File.o $(OBJ_DIR)/FSJsonHandler.o $(OBJ_DIR)/jsoncpp.o $(OBJ_DIR)/LS.o $(OBJ_DIR)/MKDir.o $(OBJ_DIR)/RM.o $(OBJ_DIR)/Terminal.o $(OBJ_DIR)/Touch.o $(OBJ_DIR)/Echo.o $(OBJ_DIR)/MV.o
+EXECUTABLE_OBJS	=  $(OBJ_DIR)/main.o
+TEST_OBJS	= $(OBJ_DIR)/test.o  $(OBJ_DIR)/CDTest.o  $(OBJ_DIR)/DirectoryTest.o  $(OBJ_DIR)/MVTest.o  $(OBJ_DIR)/TerminalTests.o
+GTEST_OBJS = $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest-main.o
+
+GTEST_DIR	= googletest/googletest
+
+GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h  $(GTEST_DIR)/include/gtest/internal/*.h
+GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
+
+
 OUT	= bin.out
+
 CC	 = g++
-FLAGS	 = -g -c -std=c++11 -std=c++0x
+
+FLAGS	 = -c -std=c++11 -std=c++0x
 CXXFLAGS	= -std=c++11 -std=c++0x -Wall
 
 all: release
 
 debug: CXXFLAGS += -g
+debug: FLAGS += -g
 debug: executable
 
 release: CXXFLAGS += -O3
 release: executable
 
-gtest: CXXFLAGS += -g
-gtest: 
-gtest: OUT := bin.test
-gtest: $(OBJS) $(TEST_OBJS)
-	$(CC) $(OBJS) $(TEST_OBJS) -o $(OUT) $(CXXFLAGS)
+test: CXXFLAGS += -g -pthread -Wextra
+test: FLAGS += -g
+test: OUT := bin.test
+test: $(OBJS) $(TEST_OBJS) $(LIB_DIR)/gtest_main.a
+	$(CC) -isystem $(GTEST_DIR)/include -lpthread -L./lib $(CXXFLAGS) $^ -o $(OUT) -lgtest -lgtest_main 
 	
 executable: $(OBJS) $(EXECUTABLE_OBJS)
 	$(CC) $(OBJS) $(EXECUTABLE_OBJS) -o $(OUT) $(CXXFLAGS)
 
-main.o: main.cpp,
-	$(CC) $(FLAGS) Terminal/main.cpp,
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CC) $(FLAGS) $< -o $@
+	
+$(OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.cpp
+	$(CC) $(FLAGS) $< -o $@
 
-Base.o: Base.cpp,
-	$(CC) $(FLAGS) Terminal/Base.cpp,
+$(OBJ_DIR)/%.o : $(GTEST_SRCS)
+	$(CC) -isystem $(GTEST_DIR)/include -I$(GTEST_DIR) $(CXXFLAGS) -c -o $@ $(GTEST_DIR)/src/gtest-all.cc
 
-CD.o: CD.cpp,
-	$(CC) $(FLAGS) Terminal/CD.cpp,
+$(OBJ_DIR)/%.o : $(GTEST_SRCS)
+	$(CC) -isystem $(GTEST_DIR)/include -I$(GTEST_DIR) $(CXXFLAGS) -c -o $@ $(GTEST_DIR)/src/gtest_main.cc
 
-CommandBase.o: CommandBase.cpp,
-	$(CC) $(FLAGS) Terminal/CommandBase.cpp,
+$(LIB_DIR)/gtest.a : $(OBJ_DIR)/gtest-all.o
+	$(AR) $(ARFLAGS) $@ $^
 
-Directory.o: Directory.cpp,
-	$(CC) $(FLAGS) Terminal/Directory.cpp,
-
-Exit.o: Exit.cpp,
-	$(CC) $(FLAGS) Terminal/Exit.cpp,
-
-File.o: File.cpp,
-	$(CC) $(FLAGS) Terminal/File.cpp,
-
-FSJsonHandler.o: FSJsonHandler.cpp,
-	$(CC) $(FLAGS) Terminal/FSJsonHandler.cpp,
-
-jsoncpp.o: jsoncpp.cpp,
-	$(CC) $(FLAGS) Terminal/jsoncpp.cpp,
-
-LS.o: LS.cpp,
-	$(CC) $(FLAGS) Terminal/LS.cpp,
-
-MKDir.o: MKDir.cpp,
-	$(CC) $(FLAGS) Terminal/MKDir.cpp,
-
-RM.o: RM.cpp,
-	$(CC) $(FLAGS) Terminal/RM.cpp,
-
-Terminal.o: Terminal.cpp,
-	$(CC) $(FLAGS) Terminal/Terminal.cpp,
-
-Touch.o: Touch.cpp
-	$(CC) $(FLAGS) Terminal/Touch.cpp,
-
-Echo.o: Echo.cpp
-	$(CC) $(FLAGS) Terminal/Echo.cpp,
-
-MV.o: MV.cpp
-	$(CC) $(FLAGS) Terminal/MV.cpp
-
+$(LIB_DIR)/gtest_main.a : $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
+	$(AR) $(ARFLAGS) $@ $^
 
 clean:
-	rm -f $(OBJS) $(EXECUTABLE_OBJS) $(TEST_OBJS)
+	rm -f $(OBJS) $(EXECUTABLE_OBJS) $(TEST_OBJS) $(GTEST_OBJS)
