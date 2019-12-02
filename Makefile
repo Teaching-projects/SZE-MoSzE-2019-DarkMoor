@@ -1,3 +1,4 @@
+MKDIR_P = mkdir -p
 LIB_DIR	= lib
 LIBS	=
 TEST_LIBS	= $(LIB_DIR)/gtest.a $(LIB_DIR)/gtest_main.a
@@ -16,7 +17,7 @@ GTEST_DIR	= googletest/googletest
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h  $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
-
+OUT_DIR = bin
 OUT	= bin.out
 
 CC	 = g++
@@ -28,23 +29,28 @@ all: release
 
 debug: CXXFLAGS += -g
 debug: FLAGS += -g
-debug: executable
+debug: directories executable
 
 release: CXXFLAGS += -O3
-release: executable
+release: directories executable
 
 test: CXXFLAGS += -g -pthread -Wextra
 test: FLAGS += -g
 test: OUT := bin.test
-test: $(OBJS) $(TEST_OBJS) $(LIB_DIR)/gtest_main.a
-	$(CC) -isystem $(GTEST_DIR)/include -lpthread -L./lib $(CXXFLAGS) $^ -o $(OUT) -lgtest -lgtest_main 
-	
+test: directories testexecutable
+
+directories: 
+	@mkdir -p $(OUT_DIR) $(OBJ_DIR) $(LIB_DIR)
+
+testexecutable: $(OBJS) $(TEST_OBJS) $(LIB_DIR)/gtest_main.a
+	$(CC) -isystem $(GTEST_DIR)/include -lpthread -L./lib $(CXXFLAGS) $^ -o $(OUT_DIR)/$(OUT) -lgtest -lgtest_main 
+
 executable: $(OBJS) $(EXECUTABLE_OBJS)
-	$(CC) $(OBJS) $(EXECUTABLE_OBJS) -o $(OUT) $(CXXFLAGS)
+	$(CC) $(OBJS) $(EXECUTABLE_OBJS) -o $(OUT_DIR)/$(OUT) $(CXXFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(FLAGS) $< -o $@
-	
+
 $(OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.cpp
 	$(CC) $(FLAGS) $< -o $@
 
