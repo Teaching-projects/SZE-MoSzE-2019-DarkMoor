@@ -1,7 +1,5 @@
 MKDIR_P = mkdir -p
 LIB_DIR	= /usr/lib
-LIBS	=
-TEST_LIBS	= $(LIB_DIR)/gtest.a $(LIB_DIR)/gtest_main.a
 
 SRC_DIR	= Terminal
 TEST_SRC_DIR	= TerminalTests
@@ -13,9 +11,6 @@ TEST_OBJS	= $(OBJ_DIR)/test.o  $(OBJ_DIR)/CDTest.o  $(OBJ_DIR)/DirectoryTest.o  
 GTEST_OBJS = $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest-main.o
 
 GTEST_DIR	= /usr/src/gtest
-
-GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h  $(GTEST_DIR)/include/gtest/internal/*.h
-GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
 OUT_DIR = bin
 OUT	= bin.out
@@ -53,18 +48,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 $(OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.cpp
 	$(CC) $(FLAGS) $< -o $@
-
-$(OBJ_DIR)/%.o : $(GTEST_SRCS)
-	$(CC) -isystem $(GTEST_DIR)/include -I$(GTEST_DIR) $(CXXFLAGS) -c -o $@ $(GTEST_DIR)/src/gtest-all.cc
-
-$(OBJ_DIR)/%.o : $(GTEST_SRCS)
-	$(CC) -isystem $(GTEST_DIR)/include -I$(GTEST_DIR) $(CXXFLAGS) -c -o $@ $(GTEST_DIR)/src/gtest_main.cc
-
-$(LIB_DIR)/gtest.a : $(OBJ_DIR)/gtest-all.o
-	$(AR) $(ARFLAGS) $@ $^
-
-$(LIB_DIR)/gtest_main.a : $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest_main.o
-	$(AR) $(ARFLAGS) $@ $^
 
 clean:
 	rm -f $(OBJS) $(EXECUTABLE_OBJS) $(TEST_OBJS) $(GTEST_OBJS)
