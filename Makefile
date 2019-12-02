@@ -1,5 +1,5 @@
 MKDIR_P = mkdir -p
-LIB_DIR	= lib
+LIB_DIR	= /usr/lib
 LIBS	=
 TEST_LIBS	= $(LIB_DIR)/gtest.a $(LIB_DIR)/gtest_main.a
 
@@ -12,7 +12,7 @@ EXECUTABLE_OBJS	=  $(OBJ_DIR)/main.o
 TEST_OBJS	= $(OBJ_DIR)/test.o  $(OBJ_DIR)/CDTest.o  $(OBJ_DIR)/DirectoryTest.o  $(OBJ_DIR)/MVTest.o  $(OBJ_DIR)/TerminalTests.o
 GTEST_OBJS = $(OBJ_DIR)/gtest-all.o $(OBJ_DIR)/gtest-main.o
 
-GTEST_DIR	= googletest/googletest
+GTEST_DIR	= /usr/src/gtest
 
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h  $(GTEST_DIR)/include/gtest/internal/*.h
 GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
@@ -42,8 +42,8 @@ test: directories testexecutable
 directories: 
 	@mkdir -p $(OUT_DIR) $(OBJ_DIR) $(LIB_DIR)
 
-testexecutable: $(OBJS) $(TEST_OBJS) $(LIB_DIR)/gtest_main.a
-	$(CC) $(CXXFLAGS) -o $(OUT_DIR)/$(OUT) -I$(GTEST_DIR)/include -L$(LIB_DIR) $^ -lpthread -lgtest -lgtest_main 
+testexecutable: $(OBJS) $(TEST_OBJS)
+	$(CC) $(CXXFLAGS) -o $(OUT_DIR)/$(OUT) -I$(GTEST_DIR)/include -L$(LIB_DIR) $^ $(LIB_DIR)/libgtest_main.a -lpthread -lgtest -lgtest_main 
 
 executable: $(OBJS) $(EXECUTABLE_OBJS)
 	$(CC) $(OBJS) $(EXECUTABLE_OBJS) -o $(OUT_DIR)/$(OUT) $(CXXFLAGS)

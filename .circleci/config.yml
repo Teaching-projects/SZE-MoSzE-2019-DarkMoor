@@ -8,10 +8,16 @@ jobs:
       - run: 
           name: 'Install GoogleTest'
           command: |
-            sudo apt-get -y -q update
-            sudo apt-get -y -q install libgtest-dev
             git submodule init
             git submodule update
+            sudo apt-get -y -q update
+            sudo apt-get -y -q install libgtest-dev
+            sudo apt-get -y -q install cmake
+            cd /usr/src/gtest
+            sudo cmake CMakeLists.txt
+            sudo make
+            sudo cp *.a /usr/lib
+            cd $HOME/project
       - run: 
           name: 'Build Executable'
           command: 'make && make clean'
