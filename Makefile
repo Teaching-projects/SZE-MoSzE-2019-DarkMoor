@@ -43,7 +43,7 @@ directories:
 	@mkdir -p $(OUT_DIR) $(OBJ_DIR) $(LIB_DIR)
 
 testexecutable: $(OBJS) $(TEST_OBJS) $(LIB_DIR)/gtest_main.a
-	$(CC) -isystem $(GTEST_DIR)/include -lpthread $(CXXFLAGS) $^ -o $(OUT_DIR)/$(OUT) -L./lib -lgtest
+	$(CC) -isystem $(GTEST_DIR)/include -lpthread -L./lib $(CXXFLAGS) $^ -o $(OUT_DIR)/$(OUT) -lgtest -lgtest_main 
 
 executable: $(OBJS) $(EXECUTABLE_OBJS)
 	$(CC) $(OBJS) $(EXECUTABLE_OBJS) -o $(OUT_DIR)/$(OUT) $(CXXFLAGS)
