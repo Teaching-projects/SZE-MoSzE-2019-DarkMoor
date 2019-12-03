@@ -32,13 +32,7 @@ directories:
 executable: $(OBJS) $(EXECUTABLE_OBJS)
 	$(CC) $(OBJS) $(EXECUTABLE_OBJS) -o $(OUT_DIR)/$(OUT) $(CXXFLAGS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/%.h
-	$(CC) $(FLAGS) $< -o $@
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CC) $(FLAGS) $< -o $@
-
-$(OBJ_DIR)/jsoncpp.o: $(SRC_DIR)/jsoncpp.cpp $(SRC_DIR)/json/*.h
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/*.h $(SRC_DIR)/json/*.h
 	$(CC) $(FLAGS) $< -o $@
 
 clean:
