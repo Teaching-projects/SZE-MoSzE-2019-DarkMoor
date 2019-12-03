@@ -24,16 +24,15 @@ all: release
 
 debug: CXXFLAGS += -g
 debug: FLAGS += -g
-debug: directories executable
+debug: directories $(OUT_DIR)/$(OUT)
 
 release: CXXFLAGS += -O3
-release: directories executable
+release: directories $(OUT_DIR)/$(OUT)
 
 directories: 
 	@mkdir -p $(OUT_DIR) $(OBJ_DIR) $(LIB_DIR)
 
-executable: $(OBJS) $(EXECUTABLE_OBJS)
-	mkdir -p $(@D)
+$(OUT_DIR)/$(OUT): $(OBJS) $(EXECUTABLE_OBJS)
 	$(CC) $(OBJS) $(EXECUTABLE_OBJS) -o $(OUT_DIR)/$(OUT) $(CXXFLAGS)
 
 -include $(DEP)
