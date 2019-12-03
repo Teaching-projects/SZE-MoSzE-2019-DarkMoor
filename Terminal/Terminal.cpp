@@ -3,28 +3,67 @@
 #include "Terminal.h"
 #include <sstream>
 #include <vector>
+#include "Base.h"
 #include "Directory.h"
+#include "File.h"
 #include "CommandBase.h"
 #include "CD.h"
 #include "LS.h"
 #include "MKDir.h"
+#include "Exit.h"
+#include "RM.h"
+#include "Touch.h"
+#include "json/json.h"
+#include "Echo.h"
 
 
 Terminal* Terminal::terminal = nullptr;
-Directory* Terminal::root;
-Directory* Terminal::actual;
+Directory* root;
+Directory* actual;
+
+Terminal::Terminal()
+{
+	this->root = new Directory("/", nullptr);
+	this->actual = Terminal::root;
+	this->exit = false;
+}
+
+Terminal::Terminal(Json::Value RootValue)
+{
+	if (RootValue.isMember("name") && RootValue.isMember("type"))
+	{
+		if (RootValue["type"].asString() == "directory")
+		{
+			this->root = new Directory(RootValue["name"].asString(), nullptr);
+			if (RootValue.isMember("subelements"))
+			{
+				root->UnJsonify(RootValue["subelements"]);
+			}
+		}
+		else
+		{
+			std::cout << "UnJsonify error at: root" << std::endl;
+			this->root = new Directory("/", nullptr);
+		}
+	}
+	else
+	{
+		std::cout << "UnJsonify error at: root" << std::endl;
+		this->root = new Directory("/", nullptr);
+	}
+	this->actual = Terminal::root;
+	this->exit = false;
+	this->stdoRedirect = false;
+}
 
 Terminal::~Terminal()
 {
+	delete root;
 	for (auto c : commands)
 	{
-		delete& c.second;
+		delete c.second;
 	}
 	commands.clear();
-	delete& commands;
-	delete root;
-	delete actual;
-	delete terminal;
 }
 
 Terminal* Terminal::GetInstance()
@@ -32,11 +71,29 @@ Terminal* Terminal::GetInstance()
 	if (Terminal::terminal == nullptr)
 	{
 		Terminal::terminal = new Terminal();
-		Terminal::root = new Directory("/", nullptr);
-		Terminal::actual = Terminal::root;
-		Terminal::terminal->AddCommand(new LS("ls"));
-		Terminal::terminal->AddCommand(new MKDir("mkdir"));
-		Terminal::terminal->AddCommand(new CD("cd"));
+		Terminal::terminal->AddCommand(new LS("ls", "", 0));
+		Terminal::terminal->AddCommand(new MKDir("mkdir", "", 1));
+		Terminal::terminal->AddCommand(new CD("cd", "", 1));
+		Terminal::terminal->AddCommand(new Exit("exit", "", 0));
+		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
+		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
+		Terminal::terminal->AddCommand(new Echo("echo", "", 0));
+	}
+	return Terminal::terminal;
+}
+
+Terminal* Terminal::GetInstance(Json::Value RootValue)
+{
+	if (Terminal::terminal == nullptr)
+	{
+		Terminal::terminal = new Terminal(RootValue);
+		Terminal::terminal->AddCommand(new LS("ls", "", 0));
+		Terminal::terminal->AddCommand(new MKDir("mkdir", "", 1));
+		Terminal::terminal->AddCommand(new CD("cd", "", 1));
+		Terminal::terminal->AddCommand(new Exit("exit", "", 0));
+		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
+		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
+		Terminal::terminal->AddCommand(new Echo("echo", "", 0));
 	}
 	return Terminal::terminal;
 }
@@ -50,12 +107,14 @@ void Terminal::MainLoop()
 {
 	std::string input;
 	this->PrintActualDir();
-	while (true)
+	while (!exit)
 	{
 		std::getline(std::cin, input);
+		input = Trim(input);
 		std::stringstream ss(input);
 		std::string element;
-		if (std::getline(ss, element, ' '))
+		std::cout << std::endl;
+		if (std::getline(ss, element, ' ') )
 		{
 			for (auto c : commands)
 			{
@@ -63,11 +122,17 @@ void Terminal::MainLoop()
 				{
 					element = "";
 					std::getline(ss, element, ' ');
-					c.second->Execute(element);
+					c.second->Execute(Trim(input.substr(c.first.length())));
+					break;
 				}
 			}
 		}
-		this->PrintActualDir();
+		stdoRedirect = false;
+		stdoPath = "";
+		if (!exit)
+		{
+			this->PrintActualDir();
+		}
 	}
 }
 
@@ -89,4 +154,100 @@ Directory* Terminal::GetActual()
 void Terminal::SetActual(Directory* dir)
 {
 	Terminal::actual = dir;
+}
+
+bool Terminal::GetExit()
+{
+	return this->exit;
+}
+
+void Terminal::SetExit(bool exit)
+{
+	this->exit = exit;
+}
+
+bool Terminal::GetStdoRedirect()
+{
+	return this->stdoRedirect;
+}
+
+void Terminal::SetStdoRedirect(bool b)
+{
+	this->stdoRedirect = b;
+}
+
+void Terminal::SetStdoPath(std::string path)
+{
+	stdoPath = path;
+}
+
+void Terminal::StdOut(std::string text)
+{
+	if (this->stdoRedirect)
+	{
+		StdOutWriteFile(text);
+	}
+	else
+	{
+		std::cout << text << std::endl;
+	}
+}
+
+void Terminal::StdOutWriteFile(std::string text)
+{
+	std::string originalpath = this->stdoPath;
+	Base* b = nullptr;
+	Directory* dir = CommandBase::GetStartDirectory(this->stdoPath);
+	if (dir == nullptr)
+	{
+		std::cout << originalpath + ": No such file or directory" << std::endl;
+		return;
+	}
+	std::vector<std::string> dirnames = CommandBase::SplitPath(this->stdoPath);
+	int i = 1;
+	for (auto t : dirnames)
+	{
+		if (i == dirnames.size())
+		{
+			File* f = nullptr;
+			b = dir->GetSubelement(t);
+			if (b == nullptr)
+			{
+				f = dir->AddFile(t);
+				f->SetContent(text);
+			}
+			else
+			{
+				f = dynamic_cast<File*>(b);
+				if (f != nullptr) f->SetContent(text);
+			}
+			return;
+		}
+		b = dir->GetSubelement(t);
+		if (b == nullptr)
+		{
+			std::cout << originalpath + ": No such file or directory" << std::endl;
+			return;
+		}
+		dir = dynamic_cast<Directory*>(b);
+		if (dir == nullptr)
+		{
+			std::cout << originalpath + ": Not a directory" << std::endl;
+			return;
+		}
+		i++;
+	}
+}
+
+Json::Value Terminal::GetFSAsJson()
+{
+	return this->root->Jsonify();
+}
+
+std::string Terminal::Trim(std::string str)
+{
+	std::string chars = "\t\n\v\f\r ";
+	str.erase(0, str.find_first_not_of(chars));
+	str.erase(str.find_last_not_of(chars) + 1);
+	return str;
 }

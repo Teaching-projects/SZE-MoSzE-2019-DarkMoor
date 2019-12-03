@@ -1,0 +1,39 @@
+version: 2.1
+jobs:
+  build:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - run: 'make && make clean'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./bin/bin.out
+  test:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: './bin/bin.out < .circleci/test.txt > .circleci/output.txt'
+      - run: 'diff .circleci/output.txt .circleci/expectedresult.txt > diff.out'
+workflows:
+  version: 2.1
+  build_and_test:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+                - dev
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+                - dev

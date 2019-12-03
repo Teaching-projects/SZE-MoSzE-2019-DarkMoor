@@ -3,29 +3,25 @@
 #include <string>
 #include "Base.h"
 #include "vector"
+#include "json/json.h"
 
-
+class File;
 class Directory : public Base
 {
 private:
 	std::vector<Base*> SubDirectories;
 public:
-	Directory(std::string Name, Directory* Parent) :Base(Name, Parent)
-	{
-	}
-	~Directory()
-	{
-		delete Parent;
-		for (auto dir : SubDirectories)
-		{
-			delete dir;
-		}
-	}
+	Directory(std::string Name, Directory* Parent);
+	~Directory();
 	std::string GetName() override;
 	std::string GetFullName() override;
-	Directory* GetParent();
+	Directory* GetParent() override;
 	Directory* AddDirectory(std::string path);
 	void ListDirectories();
-	Directory* GetDirectory(std::string path);
+	bool RemoveSubelement(std::string path);
+	Base* GetSubelement(std::string path);
+	File* AddFile(std::string path);
+	Json::Value Jsonify() override;
+	void UnJsonify(Json::Value SubValues) override;
 };
 #endif

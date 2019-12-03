@@ -1,0 +1,6 @@
+mkdir asd
+cd asd
+ls
+cd .. 
+ls
+exit

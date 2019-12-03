@@ -1,14 +1,26 @@
-#include "Terminal.h"
 #include <string>
 #include <sstream>
 #include <iostream>
 #include "Terminal.h"
+#include "FSJsonHandler.h"
 
 Terminal* terminal;
 
-int main()
+int main(int argc, char* argv[])
 {
-	terminal = Terminal::GetInstance();
-	terminal->MainLoop();
-	delete& terminal;
+	if (argc > 1)
+	{
+		FSJsonHandler* jsonhandler = FSJsonHandler::GetInstance();
+		jsonhandler->ReadFile(argv[1]);
+		terminal = Terminal::GetInstance(jsonhandler->GetRoot());
+		terminal->MainLoop();
+		jsonhandler->SetRoot(terminal->GetFSAsJson());
+		jsonhandler->WriteFile(argv[1]);
+	}
+	else
+	{
+		terminal = Terminal::GetInstance();
+		terminal->MainLoop();
+	}
+	delete terminal;
 }
