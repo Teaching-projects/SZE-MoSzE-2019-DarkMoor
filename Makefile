@@ -1,59 +1,45 @@
-OBJS	= Terminal/main.o Terminal/Base.o Terminal/CD.o Terminal/CommandBase.o Terminal/Directory.o Terminal/Exit.o Terminal/File.o Terminal/FSJsonHandler.o Terminal/jsoncpp.o Terminal/LS.o Terminal/MKDir.o Terminal/RM.o Terminal/Terminal.o Terminal/Touch.o Terminal/Echo.o
-SOURCE	= Terminal/main.cpp, Terminal/Base.cpp, Terminal/CD.cpp, Terminal/CommandBase.cpp, Terminal/Directory.cpp, Terminal/Exit.cpp, Terminal/File.cpp, Terminal/FSJsonHandler.cpp, Terminal/jsoncpp.cpp, Terminal/LS.cpp, Terminal/MKDir.cpp, Terminal/RM.cpp, Terminal/Terminal.cpp, Terminal/Touch.cpp, Terminal/Echo.cpp
-HEADER	= Terminal/Base.h, Terminal/CD.h, Terminal/CommandBase.h, Terminal/Directory.h, Terminal/Exit.h, Terminal/File.h, Terminal/FSJsonHandler.h, Terminal/json\json-forwards.h, Terminal/json\json.h, Terminal/LS.h, Terminal/MKDir.h, Terminal/RM.h, Terminal/Terminal.h, Terminal/Touch.h, Terminal/Echo.h
+MKDIR_P = mkdir -p
+LIB_DIR	= /usr/lib
+
+SRC_DIR	= Terminal
+
+OBJ_DIR	= obj
+OBJS	= $(OBJ_DIR)/Base.o $(OBJ_DIR)/CD.o $(OBJ_DIR)/CommandBase.o $(OBJ_DIR)/Directory.o $(OBJ_DIR)/Exit.o $(OBJ_DIR)/File.o $(OBJ_DIR)/FSJsonHandler.o $(OBJ_DIR)/jsoncpp.o $(OBJ_DIR)/LS.o $(OBJ_DIR)/MKDir.o $(OBJ_DIR)/RM.o $(OBJ_DIR)/Terminal.o $(OBJ_DIR)/Touch.o $(OBJ_DIR)/Echo.o
+EXECUTABLE_OBJS	=  $(OBJ_DIR)/main.o
+
+GTEST_DIR	= /usr/src/gtest
+
+OUT_DIR = bin
 OUT	= bin.out
+
 CC	 = g++
-FLAGS	 = -g -c -Wall -O2 -std=c++11 -std=c++0x
-CXXFLAGS	 = -std=c++11 -std=c++0x
 
-all: $(OBJS)
-	$(CC) -g $(OBJS) -o $(OUT) $(CXXFLAGS)
+FLAGS	 = -c -std=c++11 -std=c++0x
+CXXFLAGS	= -std=c++11 -std=c++0x -Wall
 
-main.o: main.cpp,
-	$(CC) $(FLAGS) Terminal/main.cpp, 
+all: release
 
-Base.o: Base.cpp,
-	$(CC) $(FLAGS) Terminal/Base.cpp, 
+debug: CXXFLAGS += -g
+debug: FLAGS += -g
+debug: directories executable
 
-CD.o: CD.cpp,
-	$(CC) $(FLAGS) Terminal/CD.cpp, 
+release: CXXFLAGS += -O3
+release: directories executable
 
-CommandBase.o: CommandBase.cpp,
-	$(CC) $(FLAGS) Terminal/CommandBase.cpp, 
+directories: 
+	@mkdir -p $(OUT_DIR) $(OBJ_DIR) $(LIB_DIR)
 
-Directory.o: Directory.cpp,
-	$(CC) $(FLAGS) Terminal/Directory.cpp, 
+executable: $(OBJS) $(EXECUTABLE_OBJS)
+	$(CC) $(OBJS) $(EXECUTABLE_OBJS) -o $(OUT_DIR)/$(OUT) $(CXXFLAGS)
 
-Exit.o: Exit.cpp,
-	$(CC) $(FLAGS) Terminal/Exit.cpp, 
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/%.h
+	$(CC) $(FLAGS) $< -o $@
 
-File.o: File.cpp,
-	$(CC) $(FLAGS) Terminal/File.cpp, 
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CC) $(FLAGS) $< -o $@
 
-FSJsonHandler.o: FSJsonHandler.cpp,
-	$(CC) $(FLAGS) Terminal/FSJsonHandler.cpp, 
-
-jsoncpp.o: jsoncpp.cpp,
-	$(CC) $(FLAGS) Terminal/jsoncpp.cpp, 
-
-LS.o: LS.cpp,
-	$(CC) $(FLAGS) Terminal/LS.cpp, 
-
-MKDir.o: MKDir.cpp,
-	$(CC) $(FLAGS) Terminal/MKDir.cpp, 
-
-RM.o: RM.cpp,
-	$(CC) $(FLAGS) Terminal/RM.cpp, 
-
-Terminal.o: Terminal.cpp,
-	$(CC) $(FLAGS) Terminal/Terminal.cpp, 
-
-Touch.o: Touch.cpp
-	$(CC) $(FLAGS) Terminal/Touch.cpp,
-
-Echo.o: Echo.cpp
-	$(CC) $(FLAGS) Terminal/Echo.cpp 
-
+$(OBJ_DIR)/jsoncpp.o: $(SRC_DIR)/jsoncpp.cpp $(SRC_DIR)/json/*.h
+	$(CC) $(FLAGS) $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(EXECUTABLE_OBJS)
