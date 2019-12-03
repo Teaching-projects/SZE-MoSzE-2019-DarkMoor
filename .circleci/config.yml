@@ -17,7 +17,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: './bin/bin.out < ../.circleci/test.txt > ../.circleci/output.txt'
+      - run: './bin/bin.out < .circleci/test.txt > .circleci/output.txt'
       - run: 'diff .circleci/output.txt .circleci/expectedresult.txt > diff.out'
 workflows:
   version: 2.1
