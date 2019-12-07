@@ -8,10 +8,8 @@
 #include "Terminal.h"
 
 
-RM::RM(std::string Name, std::string Options, int NonOptionalParams) : CommandBase(Name, Options, NonOptionalParams)
+RM::RM(std::string Name, std::string Options, int NonOptionalParams) : force(false), recursive(false), CommandBase(Name, Options, NonOptionalParams)
 {
-	this->force = false;
-	this->recursive = false;
 }
 
 RM::~RM()
