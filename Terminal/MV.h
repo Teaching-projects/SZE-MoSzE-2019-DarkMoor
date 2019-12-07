@@ -8,7 +8,6 @@ class MV : public CommandBase
 private:
 	void MoveElement(std::string source, std::string target);
 	Base* GetSource(std::string path);
-	Base* GetTarget(std::string path);
 	void ResetOptions() override;
 	bool SetOptions(char c) override;
 public:

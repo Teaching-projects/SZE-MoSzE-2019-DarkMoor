@@ -76,8 +76,9 @@ File* Directory::AddFile(std::string path)
 
 bool Directory::MoveElement(Base* MovableObject, std::string Name)
 {
+	if (MovableObject == nullptr) return false;
 	Directory* dir = MovableObject->GetParent();
-	if (dir)
+	if (dir && !IsChildOf(dynamic_cast<Directory*>(MovableObject)))
 	{
 		dir->RemoveSubelement(MovableObject->GetName(), false);
 		SubDirectories.push_back(MovableObject);
