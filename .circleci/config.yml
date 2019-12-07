@@ -29,6 +29,7 @@ workflows:
               only:
                 - master
                 - dev
+                - mvCommand
       - test:
           requires:
             - build
@@ -37,3 +38,4 @@ workflows:
               only:
                 - master
                 - dev
+                - mvCommand
