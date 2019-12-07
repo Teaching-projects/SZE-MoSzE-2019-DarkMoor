@@ -51,7 +51,7 @@ workflows:
               only:
                 - master
                 - dev
-                - task6
+                - gtest
       - test:
           requires:
             - build
@@ -60,4 +60,4 @@ workflows:
               only:
                 - master
                 - dev
-                - task6
+                - gtest
