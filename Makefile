@@ -9,8 +9,10 @@ OBJS	= $(OBJ_DIR)/Base.o $(OBJ_DIR)/CD.o $(OBJ_DIR)/CommandBase.o $(OBJ_DIR)/Dir
 EXECUTABLE_OBJS	=  $(OBJ_DIR)/main.o
 
 DEP = $(OBJS:%.o=%.d) $(EXECUTABLE_OBJS:%.o=%.d)
-
 GTEST_DIR	= /usr/src/gtest
+
+GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h  $(GTEST_DIR)/include/gtest/internal/*.h
+GTEST_SRCS = $(GTEST_DIR)/src/*.cc $(GTEST_DIR)/src/*.h $(GTEST_HEADERS)
 
 OUT_DIR = bin
 OUT	= bin.out
@@ -28,6 +30,11 @@ debug: directories $(OUT_DIR)/$(OUT)
 
 release: CXXFLAGS += -O3
 release: directories $(OUT_DIR)/$(OUT)
+
+test: CXXFLAGS += -g -pthread -Wextra
+test: FLAGS += -g
+test: OUT := bin.test
+test: directories testexecutable
 
 directories: 
 	@mkdir -p $(OUT_DIR) $(OBJ_DIR) $(LIB_DIR)
