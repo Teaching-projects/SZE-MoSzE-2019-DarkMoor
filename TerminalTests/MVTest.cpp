@@ -26,7 +26,7 @@ protected:
 
 TEST_F(MVTest, CheckMV)
 {
-	mv->Execute("./rootsubsub ../../");
+	mv->Execute("./rootsubsub ../");
 	Base* dir = terminal->GetRoot()->GetSubelement("rootsubsub");
 	ASSERT_NE(nullptr, dir);
 	terminal->SetActual(dynamic_cast<Directory*>(dir));
