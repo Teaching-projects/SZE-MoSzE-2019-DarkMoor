@@ -65,7 +65,10 @@ void RM::RemoveDirectory(std::string path)
 			{
 				if (recursive)
 				{
-					dir->GetParent()->RemoveSubelement(dir->GetName());
+					if (dir->GetParent() != nullptr)
+					{
+						dir->GetParent()->RemoveSubelement(dir->GetName());
+					}
 				}
 				else
 				{
@@ -77,7 +80,10 @@ void RM::RemoveDirectory(std::string path)
 			}
 			else
 			{
-				b->GetParent()->RemoveSubelement(b->GetName());
+				if (b->GetParent() != nullptr)
+				{
+					b->GetParent()->RemoveSubelement(b->GetName());
+				}
 			}
 			return;
 		}
