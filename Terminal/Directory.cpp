@@ -1,4 +1,5 @@
 #include "Directory.h"
+#include "Terminal.h"
 #include "File.h"
 #include "Terminal.h"
 #include <string>
@@ -77,17 +78,21 @@ File* Directory::AddFile(std::string path)
 
 bool Directory::MoveElement(Base* MovableObject, std::string Name)
 {
+	if (Name == "." || Name == "..") return false;
 	if (MovableObject == nullptr) return false;
 	Directory* dir = MovableObject->GetParent();
-	if (dir && !IsChildOf(dynamic_cast<Directory*>(MovableObject)))
+	if (!dir || IsChildOf(dynamic_cast<Directory*>(MovableObject))) return false;
+	Base* sub = GetSubelement(Name);
+	if (sub != MovableObject)
 	{
-		dir->RemoveSubelement(MovableObject->GetName(), false);
-		SubDirectories.push_back(MovableObject);
-		MovableObject->SetParent(this);
-		MovableObject->SetName(Name);
-		return true;
+		if (dynamic_cast<File*>(sub) && dynamic_cast<File*>(MovableObject)) RemoveSubelement(Name);
+		else if (dynamic_cast<Directory*>(sub) && dynamic_cast<File*>(MovableObject) || dynamic_cast<Directory*>(sub) && dynamic_cast<Directory*>(MovableObject)) return false;
 	}
-	return false;
+	dir->RemoveSubelement(MovableObject->GetName(), false);
+	SubDirectories.push_back(MovableObject);
+	MovableObject->SetParent(this);
+	MovableObject->SetName(Name);
+	return true;
 }
 
 Json::Value Directory::Jsonify()
@@ -166,7 +171,7 @@ bool Directory::RemoveSubelement(std::string path, bool perma)
 	{
 		if (dir->GetName() == path)
 		{
-			if (dir->IsChildOf(Terminal::GetInstance()->GetActual())) return false;
+			if (Terminal::GetInstance()->GetActual()->IsChildOf(dynamic_cast<Directory*>(dir))) return false;
 			if (perma) delete dir;
 			SubDirectories.erase(SubDirectories.begin() + i);
 			return true;
