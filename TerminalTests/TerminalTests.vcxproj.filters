@@ -51,6 +51,7 @@
     <ClCompile Include="CDTest.cpp" />
     <ClCompile Include="MVTest.cpp" />
     <ClCompile Include="TerminalTest.cpp" />
+    <ClCompile Include="RMTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Terminal">

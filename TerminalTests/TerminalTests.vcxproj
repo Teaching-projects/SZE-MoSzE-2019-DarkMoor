@@ -52,6 +52,7 @@
     <ClCompile Include="DirectoryTest.cpp" />
     <ClCompile Include="MKDirTest.cpp" />
     <ClCompile Include="MVTest.cpp" />
+    <ClCompile Include="RMTest.cpp" />
     <ClCompile Include="TerminalTest.cpp" />
   </ItemGroup>
   <ItemGroup>
