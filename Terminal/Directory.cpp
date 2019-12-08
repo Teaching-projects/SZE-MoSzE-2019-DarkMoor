@@ -1,5 +1,6 @@
 #include "Directory.h"
 #include "File.h"
+#include "Terminal.h"
 #include <string>
 #include <iostream>
 
@@ -165,6 +166,7 @@ bool Directory::RemoveSubelement(std::string path, bool perma)
 	{
 		if (dir->GetName() == path)
 		{
+			if (dir->IsChildOf(Terminal::GetInstance()->GetActual())) return false;
 			if (perma) delete dir;
 			SubDirectories.erase(SubDirectories.begin() + i);
 			return true;
