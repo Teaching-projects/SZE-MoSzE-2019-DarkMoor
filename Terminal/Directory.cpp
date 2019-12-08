@@ -1,4 +1,5 @@
 #include "Directory.h"
+#include "Terminal.h"
 #include "File.h"
 #include <string>
 #include <iostream>
@@ -76,6 +77,7 @@ File* Directory::AddFile(std::string path)
 
 bool Directory::MoveElement(Base* MovableObject, std::string Name)
 {
+	if (Name == "." || Name == "..") return false;
 	if (MovableObject == nullptr) return false;
 	Directory* dir = MovableObject->GetParent();
 	if (!dir || IsChildOf(dynamic_cast<Directory*>(MovableObject))) return false;
@@ -168,6 +170,7 @@ bool Directory::RemoveSubelement(std::string path, bool perma)
 	{
 		if (dir->GetName() == path)
 		{
+			if (Terminal::GetInstance()->GetActual()->IsChildOf(dynamic_cast<Directory*>(dir))) return false;
 			if (perma) delete dir;
 			SubDirectories.erase(SubDirectories.begin() + i);
 			return true;
