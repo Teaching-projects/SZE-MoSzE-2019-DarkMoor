@@ -31,8 +31,7 @@ TEST_F(RMTest, CheckRM)
 	rm->Execute(".././rootsub/rootsubsub");
 	ASSERT_NE(nullptr, terminal->GetActual()->GetSubelement("rootsubsub"));
 	rm->Execute(".././rootsub/rootsubsub -r");
-	Base* valami = terminal->GetActual()->GetSubelement("rootsubsub");
-	EXPECT_TRUE(nullptr == valami);
+	ASSERT_EQ(nullptr, terminal->GetActual()->GetSubelement("rootsubsub"));
 	rm->Execute("./.. -r");
 	ASSERT_NE(nullptr, terminal->GetRoot());
 }
