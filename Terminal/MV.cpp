@@ -42,16 +42,16 @@ void MV::MoveElement(std::string source, std::string target)
 	for (auto t : dirnames)
 	{
 		b = dir->GetSubelement(t);
+		if (dirnames.size() == i && dir->IsChildOf(dynamic_cast<Directory*>(s)))
+		{
+			std::cout << "mv: cannot move '" + originalsource + "' to '" + originaltarget + "': Device or resource busy" << std::endl;
+			return;
+		}
 		if (b == nullptr)
 		{
 			if (dirnames.size() != i)
 			{
 				std::cout << "mv: cannot stat '" + originaltarget + "': No such file or directory" << std::endl;
-				return;
-			}
-			if (dir == Terminal::GetInstance()->GetRoot())
-			{
-				dir->MoveElement(s, s->GetName());
 				return;
 			}
 			dir->MoveElement(s, t);
@@ -71,11 +71,6 @@ void MV::MoveElement(std::string source, std::string target)
 				return;
 			}
 			last->MoveElement(s, t);
-			return;
-		}
-		else if (dir->IsChildOf(dynamic_cast<Directory*>(s)))
-		{
-			std::cout << "mv: cannot move '" + originalsource + "' to '" + originaltarget + "': Device or resource busy" << std::endl;
 			return;
 		}
 		else if (dirnames.size() == i)
