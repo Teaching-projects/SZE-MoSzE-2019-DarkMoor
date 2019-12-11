@@ -107,7 +107,7 @@ Base* MV::GetSource(std::string path)
 			dir = dynamic_cast<Directory*>(b);
 			if (dir == nullptr)
 			{
-				std::cout << "mkdir: failed to access '" + originalpath + "': Not a directory" << std::endl;
+				std::cout << "mv: failed to access '" + originalpath + "': Not a directory" << std::endl;
 				return nullptr;
 			}
 		}
