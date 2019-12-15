@@ -15,6 +15,7 @@ void MKDir::Execute(std::string params)
 	std::vector<std::string> args = this->GetArgs(params);
 	if (!this->ValidateParams(args))
 	{
+
 		ResetOptions();
 		return;
 	}
@@ -35,7 +36,7 @@ void MKDir::AddDirectory(std::string path)
 		return;
 	}
 	std::vector<std::string> dirnames = SplitPath(path);
-	int i = 1;
+	unsigned int i = 1;
 	for (auto t : dirnames)
 	{
 		if (i == dirnames.size())

@@ -15,6 +15,7 @@
 #include "Touch.h"
 #include "json/json.h"
 #include "Echo.h"
+#include "MV.h"
 
 
 Terminal* Terminal::terminal = nullptr;
@@ -26,6 +27,7 @@ Terminal::Terminal()
 	this->root = new Directory("/", nullptr);
 	this->actual = Terminal::root;
 	this->exit = false;
+	this->stdoRedirect = false;
 }
 
 Terminal::Terminal(Json::Value RootValue)
@@ -64,6 +66,7 @@ Terminal::~Terminal()
 		delete c.second;
 	}
 	commands.clear();
+	Terminal::terminal = nullptr;
 }
 
 Terminal* Terminal::GetInstance()
@@ -78,6 +81,7 @@ Terminal* Terminal::GetInstance()
 		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
 		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
 		Terminal::terminal->AddCommand(new Echo("echo", "", 0));
+		Terminal::terminal->AddCommand(new MV("mv", "", 2));
 	}
 	return Terminal::terminal;
 }
@@ -94,6 +98,7 @@ Terminal* Terminal::GetInstance(Json::Value RootValue)
 		Terminal::terminal->AddCommand(new RM("rm", "rf", 1));
 		Terminal::terminal->AddCommand(new Touch("touch", "", 1));
 		Terminal::terminal->AddCommand(new Echo("echo", "", 0));
+		Terminal::terminal->AddCommand(new MV("mv", "", 2));
 	}
 	return Terminal::terminal;
 }
@@ -204,7 +209,7 @@ void Terminal::StdOutWriteFile(std::string text)
 		return;
 	}
 	std::vector<std::string> dirnames = CommandBase::SplitPath(this->stdoPath);
-	int i = 1;
+	unsigned int i = 1;
 	for (auto t : dirnames)
 	{
 		if (i == dirnames.size())

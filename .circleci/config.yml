@@ -5,11 +5,30 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - run: 'make && make clean'
+      - run: 
+          name: 'Install GoogleTest'
+          command: |
+            git submodule init
+            git submodule update
+            sudo apt-get -y -q update
+            sudo apt-get -y -q install libgtest-dev
+            sudo apt-get -y -q install cmake
+            cd /usr/src/gtest
+            sudo cmake CMakeLists.txt
+            sudo make
+            sudo cp *.a /usr/lib
+            cd $HOME/project
+      - run: 
+          name: 'Build Executable'
+          command: 'make && make clean'
+      - run: 
+          name: 'Build Unit Test'
+          command: 'make test && make clean'
       - persist_to_workspace:
           root: .
           paths:
             - ./bin/bin.out
+            - ./bin/bin.test
   test:
     machine:
       image: ubuntu-1604:201903-01
@@ -17,8 +36,11 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - run: 
+          name: 'Run Unit Test'
+          command: './bin/bin.test'
       - run: './bin/bin.out < .circleci/test.txt > .circleci/output.txt'
-      - run: 'diff .circleci/output.txt .circleci/expectedresult.txt > diff.out'
+      - run: 'diff .circleci/output.txt .circleci/expectedresult.txt'
 workflows:
   version: 2.1
   build_and_test:
@@ -29,6 +51,7 @@ workflows:
               only:
                 - master
                 - dev
+                - gtest
       - test:
           requires:
             - build
@@ -37,3 +60,4 @@ workflows:
               only:
                 - master
                 - dev
+                - gtest

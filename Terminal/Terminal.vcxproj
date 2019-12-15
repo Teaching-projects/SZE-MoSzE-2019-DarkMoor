@@ -99,8 +99,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -163,6 +162,7 @@
     <ClCompile Include="LS.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MKDir.cpp" />
+    <ClCompile Include="MV.cpp" />
     <ClCompile Include="RM.cpp" />
     <ClCompile Include="Terminal.cpp" />
     <ClCompile Include="Touch.cpp" />
@@ -180,6 +180,7 @@
     <ClInclude Include="json\json.h" />
     <ClInclude Include="LS.h" />
     <ClInclude Include="MKDir.h" />
+    <ClInclude Include="MV.h" />
     <ClInclude Include="RM.h" />
     <ClInclude Include="Terminal.h" />
     <ClInclude Include="Touch.h" />

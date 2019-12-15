@@ -13,7 +13,7 @@ FSJsonHandler::FSJsonHandler()
 
 FSJsonHandler::~FSJsonHandler()
 {
-
+	FSJsonHandler::instance = nullptr;
 }
 
 FSJsonHandler* FSJsonHandler::GetInstance()

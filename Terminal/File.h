@@ -12,9 +12,7 @@ private:
 public:
 	File(std::string Name, Directory* Parent, std::string Content = "");
 	~File();
-	std::string GetName() override;
 	std::string GetFullName() override;
-	Directory* GetParent() override;
 	Json::Value Jsonify() override;
 	void UnJsonify(Json::Value SubValues) override;
 	void SetContent(std::string content);

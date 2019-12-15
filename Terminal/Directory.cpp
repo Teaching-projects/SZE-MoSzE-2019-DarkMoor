@@ -1,4 +1,5 @@
 #include "Directory.h"
+#include "Terminal.h"
 #include "File.h"
 #include <string>
 #include <iostream>
@@ -14,7 +15,6 @@ Directory::~Directory()
 	{
 		delete dir;
 	}
-	delete Parent;
 }
 
 std::string Directory::GetFullName()
@@ -31,14 +31,6 @@ std::string Directory::GetFullName()
 		}
 	}
 	return this->Name;
-}
-std::string Directory::GetName()
-{
-	return this->Name;
-}
-Directory* Directory::GetParent()
-{
-	return this->Parent;
 }
 
 Directory* Directory::AddDirectory(std::string dirname)
@@ -81,6 +73,25 @@ File* Directory::AddFile(std::string path)
 	File* file = new File(path, this);
 	SubDirectories.push_back(file);
 	return file;
+}
+
+bool Directory::MoveElement(Base* MovableObject, std::string Name)
+{
+	if (Name == "." || Name == "..") return false;
+	if (MovableObject == nullptr) return false;
+	Directory* dir = MovableObject->GetParent();
+	if (!dir || IsChildOf(dynamic_cast<Directory*>(MovableObject))) return false;
+	Base* sub = GetSubelement(Name);
+	if (sub != MovableObject)
+	{
+		if (dynamic_cast<File*>(sub) && dynamic_cast<File*>(MovableObject)) RemoveSubelement(Name);
+		else if (dynamic_cast<Directory*>(sub) && dynamic_cast<File*>(MovableObject) || dynamic_cast<Directory*>(sub) && dynamic_cast<Directory*>(MovableObject)) return false;
+	}
+	dir->RemoveSubelement(MovableObject->GetName(), false);
+	SubDirectories.push_back(MovableObject);
+	MovableObject->SetParent(this);
+	MovableObject->SetName(Name);
+	return true;
 }
 
 Json::Value Directory::Jsonify()
@@ -152,17 +163,19 @@ void Directory::ListDirectories()
 	}
 }
 
-bool Directory::RemoveSubelement(std::string path)
+bool Directory::RemoveSubelement(std::string path, bool perma)
 {
 	int i = 0;
 	for (auto dir : SubDirectories)
 	{
 		if (dir->GetName() == path)
 		{
-			delete dir;
+			if (Terminal::GetInstance()->GetActual()->IsChildOf(dynamic_cast<Directory*>(dir))) return false;
+			if (perma) delete dir;
 			SubDirectories.erase(SubDirectories.begin() + i);
 			return true;
 		}
+		i++;
 	}
 	return false;
 }

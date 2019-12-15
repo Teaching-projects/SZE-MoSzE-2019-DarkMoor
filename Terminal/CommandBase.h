@@ -24,6 +24,7 @@ public:
 	static std::vector<std::string> SplitPath(std::string path);
 
 	CommandBase(std::string Name, std::string Options, int NonOptionalParams);
+	virtual ~CommandBase() = 0;
 	std::string GetName();
 
 	virtual void Execute(std::string params) = 0;

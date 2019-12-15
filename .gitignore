@@ -341,3 +341,4 @@ healthchecksdb
 
 Terminal/*.o
 bin.out
+/bin.test

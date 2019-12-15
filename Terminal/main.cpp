@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
 		terminal->MainLoop();
 		jsonhandler->SetRoot(terminal->GetFSAsJson());
 		jsonhandler->WriteFile(argv[1]);
+		delete jsonhandler;
 	}
 	else
 	{

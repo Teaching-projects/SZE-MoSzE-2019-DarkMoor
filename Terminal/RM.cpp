@@ -46,7 +46,7 @@ void RM::RemoveDirectory(std::string path)
 		return;
 	}
 	std::vector<std::string> dirnames = SplitPath(path);
-	int i = 1;
+	unsigned int i = 1;
 	for (auto t : dirnames)
 	{
 		b = dir->GetSubelement(t);
@@ -65,7 +65,10 @@ void RM::RemoveDirectory(std::string path)
 			{
 				if (recursive)
 				{
-					dir->GetParent()->RemoveSubelement(dir->GetName());
+					if (dir->GetParent() != nullptr)
+					{
+						dir->GetParent()->RemoveSubelement(dir->GetName());
+					}
 				}
 				else
 				{
@@ -77,7 +80,10 @@ void RM::RemoveDirectory(std::string path)
 			}
 			else
 			{
-				b->GetParent()->RemoveSubelement(b->GetName());
+				if (b->GetParent() != nullptr)
+				{
+					b->GetParent()->RemoveSubelement(b->GetName());
+				}
 			}
 			return;
 		}
